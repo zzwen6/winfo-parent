@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    oracle:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      username: nav
+      password: nav
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:oracle:thin:@198.28.171.81:1521/nav
+
+    sqlserver:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: DBQuery
+      password: DBQuery
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:sqlserver://198.28.51.224:6005;DatabaseName=SysNavigationMarkDB_NewO
+
