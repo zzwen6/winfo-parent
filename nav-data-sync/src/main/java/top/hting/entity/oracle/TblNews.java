@@ -2,15 +2,26 @@ package top.hting.entity.oracle;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
 
+
+
+/**
+ * 航标动态
+ */
 @Data
 @ToString
 @TableName("tbl_news")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TblNews implements Serializable {
 
     @TableId(value = "newsId")
@@ -31,6 +42,10 @@ public class TblNews implements Serializable {
     private String applyNumber;
 
     private String title;
+    private String contents;
+    private String contents2;
+
+
 
     private String publishCode;
 

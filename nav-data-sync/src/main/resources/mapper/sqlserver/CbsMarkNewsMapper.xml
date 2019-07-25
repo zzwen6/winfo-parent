@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.sqlserver.CbsMarkNewsMapper">
+
+
+    <!--技术参数视图-->
+    <select id="findByParams" resultType="top.hting.entity.sqlserver.VCbsTwoNewsTech">
+        SELECT
+          pid
+         ,CbsMarkNewsFID
+         ,BasNavigationMarkFID
+         ,OrgCode
+         ,SysLastUpd
+         ,SetTypeCode
+         ,SerialNumber
+         ,markno
+         ,MarkName
+         ,TypeCode
+         ,LatitudeDegree
+         ,LatitudeMinute
+         ,LatitudeSecond
+         ,LongitudeDegree
+         ,LongitudeMinute
+         ,LongitudeSecond
+         ,Light
+         ,LightHeight
+         ,Range
+         ,MarkHeight
+         ,Construct
+         ,Remark
+         ,State
+         ,SysDeleted
+        FROM V_Cbs_TwoNews_Tech
+        WHERE  1=1
+        <if test="pid!=null and pid != ''">
+            and pid = #{pid}
+
+        </if>
+        <if test="parentId != null and parentId != ''">
+            and CbsMarkNewsFID = #{parentId}
+
+        </if>
+        <if test="markId != null and markId != ''">
+            and BasNavigationMarkFID = #{markId}
+
+        </if>
+
+
+
+    </select>
+</mapper>

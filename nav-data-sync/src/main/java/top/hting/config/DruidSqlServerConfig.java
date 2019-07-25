@@ -1,7 +1,9 @@
 package top.hting.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -39,6 +41,12 @@ public class DruidSqlServerConfig {
     public MybatisSqlSessionFactoryBean sqlServerSessionFactory(@Qualifier("sqlServerDatasource") DataSource dataSource) throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
+        MybatisConfiguration config = new MybatisConfiguration();
+        config.setMapUnderscoreToCamelCase(false);
+        config.setCacheEnabled(true);
+
+        config.setLogImpl(StdOutImpl.class);
+        factoryBean.setConfiguration(config);
 
 //        factoryBean.setTypeAliasesPackage("top.hting.mapper.sqlserver");
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/sqlserver/*.xml"));
