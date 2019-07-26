@@ -7,14 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.hting.entity.Base;
+import top.hting.entity.OBase;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @TableName("Tbl_PlanSiteList")
-public class TblPlanSiteList extends Base {
+public class TblPlanSiteList extends OBase {
     @TableId("planMarkId")
     @Excel(name = "planMarkId")
     private String planMarkId;

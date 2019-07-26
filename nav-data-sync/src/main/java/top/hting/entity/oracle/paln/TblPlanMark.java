@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.hting.entity.Base;
+import top.hting.entity.OBase;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @TableName("Tbl_PlanMark")
-public class TblPlanMark extends Base implements Serializable {
+public class TblPlanMark extends OBase implements Serializable {
     @TableId("planId")
     @Excel(name = "planId")
     private String planId;

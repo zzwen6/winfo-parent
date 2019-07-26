@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.hting.entity.Base;
+import top.hting.entity.OBase;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @TableName("Tbl_PlanSite")
-public class TblPlanSite extends Base {
+public class TblPlanSite extends OBase {
     @TableId("planId")
     private String planId;
     

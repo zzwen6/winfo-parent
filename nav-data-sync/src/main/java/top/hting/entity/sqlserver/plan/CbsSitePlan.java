@@ -14,6 +14,8 @@ import java.util.Date;
 /**
  * 站点维护保养计划 Cbs_Site_Plan
  * @see CbsSiteList
+ * @see top.hting.entity.oracle.paln.TblPlanSite
+ *
  */
 @Data
 @TableName("Cbs_Site_Plan")
