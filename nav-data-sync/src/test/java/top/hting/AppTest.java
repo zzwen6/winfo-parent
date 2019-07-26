@@ -1,8 +1,17 @@
 package top.hting;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +20,28 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.QueryEntity;
 import top.hting.entity.oracle.TblNews;
 import top.hting.entity.oracle.TblNewsTechnology;
+import top.hting.entity.oracle.TblUser;
 import top.hting.entity.sqlserver.CbsMarkNews;
 import top.hting.entity.sqlserver.VCbsTwoNewsTech;
 import top.hting.entity.sqlserver.tech.CbsTwoNewsTech;
 import top.hting.entity.sqlserver.tech.CbsTwoNewsTechAis;
+import top.hting.entity.sqlserver.tech.CbsTwoNewsTechDGPS;
+import top.hting.entity.sqlserver.tech.CbsTwoNewsTechRadar;
+import top.hting.entity.sqlserver.tech.CbsTwoNewsTechVoice;
 import top.hting.mapper.oracle.TblNewsMapper;
 import top.hting.mapper.oracle.TblNewsTechnologyMapper;
+import top.hting.mapper.oracle.TblUserMapper;
 import top.hting.mapper.sqlserver.CbsMarkNewsMapper;
 import top.hting.mapper.sqlserver.CbsTwoNewsTechAisMapper;
+import top.hting.mapper.sqlserver.CbsTwoNewsTechDGPSMapper;
 import top.hting.mapper.sqlserver.CbsTwoNewsTechMapper;
+import top.hting.mapper.sqlserver.CbsTwoNewsTechRadarMapper;
+import top.hting.mapper.sqlserver.CbsTwoNewsTechVoiceMapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Unit test for simple App.
@@ -44,6 +64,42 @@ public class AppTest {
     CbsTwoNewsTechMapper cbsTwoNewsTechMapper;
     @Autowired
     CbsTwoNewsTechAisMapper cbsTwoNewsTechAisMapper;
+    @Autowired
+    CbsTwoNewsTechDGPSMapper cbsTwoNewsTechDGPSMapper;
+    @Autowired
+    CbsTwoNewsTechRadarMapper cbsTwoNewsTechRadarMapper;
+    @Autowired
+    CbsTwoNewsTechVoiceMapper cbsTwoNewsTechVoiceMapper;
+    @Autowired
+    TblUserMapper tblUserMapper;
+
+
+    final Map<String, TblUser> userMap = new HashMap<>();
+
+
+    String cbsMarkNewsSuccessFileName = "旧系统航标动态-成功.xlxs";
+    String cbsMarkNewsFailedFileName = "旧系统航标动态-失败.xlxs";
+    String tblNewsSuccessFileName = "新系统航标动态-成功.xlsx";
+    String tblNewsFailedFileName = "新系统航标动态-失败.xlsx";
+
+    String tblTechSuccessFileName = "新系统技术参数-新增-成功.xlsx";
+    String tblTechFailedFileName = "新系统技术参数-新增-失败.xlsx";
+    String tblTechUpdateSuccessFileName = "新系统技术参数-更新-成功.xlsx";
+    String tblTechUpdateFailedFileName = "新系统技术参数-更新-失败.xlsx";
+
+    // 旧系统航标动态成功，失败列表
+    List<CbsMarkNews> cbsMarkNewsSuccessList = new ArrayList<>();
+    List<CbsMarkNews> cbsMarkNewsFailedList = new ArrayList<>();
+
+    // 新系统成功，失败列表
+    List<TblNews> tblNewsSuccessList = new ArrayList<>();
+    List<TblNews> tblNewsFailedList = new ArrayList<>();
+
+    // 新系统技术参数 新增、修改的成功失败项
+    List<TblNewsTechnology> tblTechSuccessList = new ArrayList<>();
+    List<TblNewsTechnology> tblTechFailedList = new ArrayList<>();
+    List<TblNewsTechnology> tblTechUpdateSuccessList = new ArrayList<>();
+    List<TblNewsTechnology> tblTechUpdateFailedList = new ArrayList<>();
 
     /**
      * 同步航标动态和技术参数(流程暂未在oracle中进行创建同步)
@@ -52,11 +108,19 @@ public class AppTest {
     public void synMarkNewsAndTechnology() {
         String newsid = "cc9b093f-80f1-4136-8d3a-fba55b977fc4";
         // 旧数据库中所有的航标动态数据
-        // List<CbsMarkNews> cbsMarkNews = cbsMarkNewsMapper.selectList(null);
-        List<CbsMarkNews> cbsMarkNews = new ArrayList<>();
+        List<CbsMarkNews> cbsMarkNews = cbsMarkNewsMapper.selectList(null);
+//        List<CbsMarkNews> cbsMarkNews = new ArrayList<>();
 
-        CbsMarkNews news = cbsMarkNewsMapper.selectById(newsid);
-        cbsMarkNews.add(news);
+//        CbsMarkNews news = cbsMarkNewsMapper.selectById(newsid);
+//        cbsMarkNews.add(news);
+
+        List<TblUser> tblUsers = tblUserMapper.selectList(null);
+
+        tblUsers.forEach(tblUser -> {
+            userMap.put(tblUser.getUserId(), tblUser);
+        });
+
+
 
 
         // 遍历旧数据，在新数据库中比对是否存在此航标动态
@@ -69,26 +133,69 @@ public class AppTest {
             if (tblNews == null) {
                 tblNews = convertCBS2TblNews(markNews);
 
-                //tblNewsMapper.insert(tblNews);
+                try {
+                    tblNewsMapper.insert(tblNews);
 
-                // 旧系统技术参数技术参数
-                List<VCbsTwoNewsTech> twoNewsTeches = cbsMarkNewsMapper.findByParams(QueryEntity.builder().parentId(markNews.getPid()).build());
+                    tblNewsSuccessList.add(tblNews);
+                    cbsMarkNewsSuccessList.add(markNews);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    tblNewsFailedList.add(tblNews);
+                    cbsMarkNewsFailedList.add(markNews);
 
-                // TODO 还差几张表，组合起来就是视图的数据
-                List<CbsTwoNewsTech> cbsTwoNewsTeches = cbsTwoNewsTechMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-                List<CbsTwoNewsTechAis> cbsTwoNewsTechAis = cbsTwoNewsTechAisMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+                    // 失败后没必要再进行技术参数的添加
+                    continue;
 
-                // 1.
-                List<TblNewsTechnology> t1 = cbsTwoNewsTeches2TblNewsTechnology(cbsTwoNewsTeches);
+                }
 
-                List<TblNewsTechnology> t2 = cbsTwoNewsTechAis2TblNewsTechnology(cbsTwoNewsTechAis);
+                // 旧系统技术参数转tbl技术参数
+                List<TblNewsTechnology> allTblNewsTechnology = getAllTblNewsTechnology(markNews);
 
+                // 技术参数增加到新系统中
+                for (TblNewsTechnology technology : allTblNewsTechnology) {
 
+                    try {
+                        tblNewsTechnologyMapper.insert(technology);
+
+                        tblTechSuccessList.add(technology);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        technology.setRemark(e.getLocalizedMessage());
+                        tblTechFailedList.add(technology);
+                    }
+                }
 
 
 
             } else {
                 // 存在航标动态，检测是技术参数是否存在，是否完整
+                List<TblNewsTechnology> allTblNewsTechnology = getAllTblNewsTechnology(markNews);
+                for (TblNewsTechnology technology : allTblNewsTechnology) {
+                    // 更新或者新增
+                    if (tblNewsTechnologyMapper.selectById(technology.getTechnologyId()) != null) {
+                        try {
+                            tblNewsTechnologyMapper.updateById(technology);
+
+                            tblTechUpdateSuccessList.add(technology);
+
+                        } catch (Exception e) {
+                            technology.setRemark(e.getLocalizedMessage());
+                            tblTechUpdateFailedList.add(technology);
+                        }
+                    }else {
+                        try {
+
+                            tblNewsTechnologyMapper.insert(technology);
+
+                            tblTechSuccessList.add(technology);
+
+                        } catch (Exception e) {
+                            technology.setRemark(e.getLocalizedMessage());
+                            tblTechFailedList.add(technology);
+                        }
+                    }
+                }
 
 
             }
@@ -96,6 +203,232 @@ public class AppTest {
         }
 
 
+        saveFile();
+
+
+    }
+
+    private void saveFile() {
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("cbs航标动态成功", "cbs航标动态成功", ExcelType.XSSF),
+                CbsMarkNews.class, cbsMarkNewsSuccessList);
+
+
+
+        Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("cbs航标动态失败", "cbs航标动态失败", ExcelType.XSSF),
+                CbsMarkNews.class, cbsMarkNewsFailedList);
+
+
+        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标动态失败", "tbl航标动态失败", ExcelType.XSSF),
+                TblNews.class, tblNewsFailedList);
+
+        Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标动态成功", "tbl航标动态成功", ExcelType.XSSF),
+                TblNews.class, tblNewsSuccessList);
+
+
+        Workbook workbook4 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标技术参数新增成功", "tbl航标技术参数新增成功", ExcelType.XSSF),
+                TblNewsTechnology.class, tblTechSuccessList);
+
+        Workbook workbook5 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标技术参数新增失败", "tbl航标技术参数新增失败", ExcelType.XSSF),
+                TblNewsTechnology.class, tblTechFailedList);
+
+        Workbook workbook6 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标技术参数更新成功", "tbl航标技术参数更新成功", ExcelType.XSSF),
+                TblNewsTechnology.class, tblTechUpdateSuccessList);
+
+        Workbook workbook7 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标技术参数更新失败", "tbl航标技术参数更新失败", ExcelType.XSSF),
+                TblNewsTechnology.class, tblTechUpdateFailedList);
+
+        try {
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + cbsMarkNewsSuccessFileName);
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + cbsMarkNewsFailedFileName);
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblNewsFailedFileName);
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblNewsSuccessFileName);
+            FileOutputStream fos4 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechSuccessFileName);
+            FileOutputStream fos5 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechFailedFileName);
+            FileOutputStream fos6 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechUpdateSuccessFileName);
+            FileOutputStream fos7 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechUpdateFailedFileName);
+
+
+            workbook.write(fos);
+            workbook1.write(fos1);
+            workbook2.write(fos2);
+            workbook3.write(fos3);
+            workbook4.write(fos4);
+            workbook5.write(fos5);
+            workbook6.write(fos6);
+            workbook7.write(fos7);
+
+            fos.close();
+            fos1.close();
+            fos2.close();
+            fos3.close();
+            fos4.close();
+            fos5.close();
+            fos6.close();
+            fos7.close();
+
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
+     * 获取某航标所有的技术参数，转换成tbl的
+     * @param markNews
+     * @return
+     */
+    private List<TblNewsTechnology> getAllTblNewsTechnology(CbsMarkNews markNews) {
+        // List<VCbsTwoNewsTech> twoNewsTeches = cbsMarkNewsMapper.findByParams(QueryEntity.builder().parentId(markNews.getPid()).build());
+        List<TblNewsTechnology> technologies = new ArrayList<>();
+
+        // 几张表，组合起来就是视图的数据
+        List<CbsTwoNewsTech> cbsTwoNewsTeches = cbsTwoNewsTechMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+        List<CbsTwoNewsTechAis> cbsTwoNewsTechAis = cbsTwoNewsTechAisMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+        List<CbsTwoNewsTechDGPS> cbsTwoNewsTechDGPS = cbsTwoNewsTechDGPSMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+        List<CbsTwoNewsTechRadar> cbsTwoNewsTechRadars = cbsTwoNewsTechRadarMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+        List<CbsTwoNewsTechVoice> cbsTwoNewsTechVoices = cbsTwoNewsTechVoiceMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+        // 1.
+        List<TblNewsTechnology> t1 = cbsTwoNewsTeches2TblNewsTechnology(cbsTwoNewsTeches);
+        // 2.
+        List<TblNewsTechnology> t2 = cbsTwoNewsTechAis2TblNewsTechnology(cbsTwoNewsTechAis);
+        // 3.
+        List<TblNewsTechnology> t3 = cbsTwoNewsTechDGPS2TblNewsTechnology(cbsTwoNewsTechDGPS);
+        // 4.
+        List<TblNewsTechnology> t4 = cbsTwoNewsTechRadars2TblNewsTechnology(cbsTwoNewsTechRadars);
+        // 5.
+        List<TblNewsTechnology> t5 = cbsTwoNewsTechVoices2TblNewsTechnology(cbsTwoNewsTechVoices);
+
+        technologies.addAll(t1);
+        technologies.addAll(t2);
+        technologies.addAll(t3);
+        technologies.addAll(t4);
+        technologies.addAll(t5);
+
+        return technologies;
+    }
+
+    private List<TblNewsTechnology> cbsTwoNewsTechVoices2TblNewsTechnology(List<CbsTwoNewsTechVoice> cbsTwoNewsTechVoices) {
+        List<TblNewsTechnology> t1 = new ArrayList<>();
+        for (CbsTwoNewsTechVoice c : cbsTwoNewsTechVoices) {
+            TblNewsTechnology t = new TblNewsTechnology();
+            t.setTechnologyId(c.getPid());
+            t.setNewsId(c.getCbsMarkNewsFID());
+            t.setSerialNumber(c.getSerialNumber());
+            t.setMarkId(c.getBasNavigationMarkFID());
+            t.setMarkTableCode(c.getMarkNo());
+            t.setTypeCode(c.getHbTypeCode());
+            t.setMarkName(c.getMarkName());
+
+            t.setLatitudeDegree(c.getLatitudeDegree());
+            t.setLatitudeMinute(c.getLatitudeMinute());
+            t.setLatitudeSecond(c.getLatitudeSecond());
+            t.setLongitudeDegree(c.getLongitudeDegree());
+            t.setLongitudeMinute(c.getLongitudeMinute());
+            t.setLongitudeSecond(c.getLongitudeSecond());
+
+            t.setSetupTypeCodes(c.getSetTypeCode());
+
+            t.setRemark(c.getRemark());
+
+            t.setSysCreated(c.getSysCreated());
+            t.setSysCreatedby(userMap.get(c.getSysCreatedby()) != null ? userMap.get(c.getSysCreatedby()).getUserName() : c.getSysCreatedby());
+            t.setSysOrg(c.getSysOrg());
+            t.setSysDept(c.getSysDept());
+            t.setSysLastUpd(c.getSysLastUpd());
+            t.setSysLastUpdBy((userMap.get(c.getSysLastUpdBy()) != null ? userMap.get(c.getSysLastUpdBy()).getUserName() : c.getSysLastUpdBy()));
+
+            t1.add(t);
+        }
+        return t1;
+    }
+
+
+    private List<TblNewsTechnology> cbsTwoNewsTechRadars2TblNewsTechnology(List<CbsTwoNewsTechRadar> cbsTwoNewsTechRadars) {
+        List<TblNewsTechnology> t1 = new ArrayList<>();
+        for (CbsTwoNewsTechRadar c : cbsTwoNewsTechRadars) {
+            TblNewsTechnology t = new TblNewsTechnology();
+
+            t.setTechnologyId(c.getPid());
+            t.setNewsId(c.getCbsMarkNewsFID());
+            t.setSerialNumber(c.getSerialNumber());
+            t.setMarkId(c.getBasNavigationMarkFID());
+            t.setMarkTableCode(c.getMarkNo());
+//            t.setMarkNameEn(c.getMarkNameE());
+            t.setMarkName(c.getMarkName());
+
+            t.setLatitudeDegree(c.getLatitudeDegree());
+            t.setLatitudeMinute(c.getLatitudeMinute());
+            t.setLatitudeSecond(c.getLatitudeSecond());
+            t.setLongitudeDegree(c.getLongitudeDegree());
+            t.setLongitudeMinute(c.getLongitudeMinute());
+            t.setLongitudeSecond(c.getLongitudeSecond());
+
+            t.setFrequency(c.getFrequency());
+            t.setBandCode(c.getBandCode());
+            t.setOperatingRange(c.getOperatingRange());
+            t.setIdentiferCode(c.getIdentiferCode());
+            t.setSetupTypeCodes(c.getSetTypeCode());
+            t.setRemark(c.getRemark());
+
+            t.setSysCreated(c.getSysCreated());
+            t.setSysCreatedby(userMap.get(c.getSysCreatedby()) != null ? userMap.get(c.getSysCreatedby()).getUserName() : c.getSysCreatedby());
+            t.setSysOrg(c.getSysOrg());
+            t.setSysDept(c.getSysDept());
+            t.setSysLastUpd(c.getSysLastUpd());
+            t.setSysLastUpdBy((userMap.get(c.getSysLastUpdBy()) != null ? userMap.get(c.getSysLastUpdBy()).getUserName() : c.getSysLastUpdBy()));
+
+            t1.add(t);
+        }
+        return t1;
+    }
+
+    private List<TblNewsTechnology> cbsTwoNewsTechDGPS2TblNewsTechnology(List<CbsTwoNewsTechDGPS> cbsTwoNewsTechDGPS) {
+        List<TblNewsTechnology> t1 = new ArrayList<>();
+        for (CbsTwoNewsTechDGPS c : cbsTwoNewsTechDGPS) {
+            TblNewsTechnology t = new TblNewsTechnology();
+
+            t.setTechnologyId(c.getPid());
+            t.setNewsId(c.getCbsMarkNewsFID());
+            t.setSerialNumber(c.getSerialNumber());
+            t.setMarkId(c.getBasNavigationMarkFID());
+            t.setMarkTableCode(c.getMarkNo());
+            t.setMarkNameEn(c.getMarkNameE());
+            t.setMarkName(c.getMarkName());
+
+            t.setLatitudeDegree(c.getLatitudeDegree());
+            t.setLatitudeMinute(c.getLatitudeMinute());
+            t.setLatitudeSecond(c.getLatitudeSecond());
+            t.setLongitudeDegree(c.getLongitudeDegree());
+            t.setLongitudeMinute(c.getLongitudeMinute());
+            t.setLongitudeSecond(c.getLongitudeSecond());
+
+            t.setInformationType(c.getInformationType());
+            t.setSignalFormat(c.getSignalFormat());
+            t.setOperatingRange(c.getOperatingRange());
+            t.setWorkTime(c.getWorkTime());
+            c.getRadioIdentifier(); // TODO 这个字段不知对应哪个
+
+            t.setModulation(c.getModulation());
+            t.setBroadcastCategory(c.getBroadcastCategory());
+            t.setTransferRate(c.getTransferRate());
+            t.setSetupTypeCodes(c.getSetTypeCode());
+            t.setRemark(c.getRemark());
+
+            t.setSysCreated(c.getSysCreated());
+            t.setSysCreatedby(userMap.get(c.getSysCreatedby()) != null ? userMap.get(c.getSysCreatedby()).getUserName() : c.getSysCreatedby());
+            t.setSysOrg(c.getSysOrg());
+            t.setSysDept(c.getSysDept());
+            t.setSysLastUpd(c.getSysLastUpd());
+            t.setSysLastUpdBy((userMap.get(c.getSysLastUpdBy()) != null ? userMap.get(c.getSysLastUpdBy()).getUserName() : c.getSysLastUpdBy()));
+
+            t1.add(t);
+        }
+        return t1;
     }
 
     /**
@@ -117,6 +450,7 @@ public class AppTest {
             technology.setTypeCode(c.getHbTypeCode());
             technology.setMarkName(c.getMarkName());
             technology.setMarkNameEn(c.getMarkNameE());
+
             technology.setLatitudeDegree(c.getLatitudeDegree());
             technology.setLatitudeMinute(c.getLatitudeMinute());
             technology.setLatitudeSecond(c.getLatitudeSecond());
@@ -132,11 +466,12 @@ public class AppTest {
 
             technology.setRemark(c.getRemark());
             technology.setSysCreated(c.getSysCreated());
-            technology.setSysCreatedby(c.getSysCreatedby());
+            technology.setSysCreatedby(userMap.get(c.getSysCreatedby()) != null ? userMap.get(c.getSysCreatedby()).getUserName() : c.getSysCreatedby());
             technology.setSysOrg(c.getSysOrg());
             technology.setSysDept(c.getSysDept());
             technology.setSysLastUpd(c.getSysLastUpd());
-            technology.setSysLastUpdBy(c.getSysLastUpdBy());
+            technology.setSysLastUpdBy(userMap.get(c.getSysLastUpdBy()) != null ? userMap.get(c.getSysLastUpdBy()).getUserName() : c.getSysLastUpdBy());
+
             t1.add(technology);
 
         }
@@ -198,11 +533,12 @@ public class AppTest {
             technology.setTransferRate(null);
             technology.setRemark(c.getRemark());
             technology.setSysCreated(c.getSysCreated());
-            technology.setSysCreatedby(c.getSysCreatedby());
+            technology.setSysCreatedby(userMap.get(c.getSysCreatedby()) != null ? userMap.get(c.getSysCreatedby()).getUserName() : c.getSysCreatedby());
             technology.setSysOrg(c.getSysOrg());
             technology.setSysDept(c.getSysDept());
             technology.setSysLastUpd(c.getSysLastUpd());
-            technology.setSysLastUpdBy(c.getSysLastUpdBy());
+            technology.setSysLastUpdBy(userMap.get(c.getSysLastUpdBy()) != null ? userMap.get(c.getSysLastUpdBy()).getUserName() : c.getSysLastUpdBy());
+
 
             t1.add(technology);
         }
@@ -295,6 +631,12 @@ public class AppTest {
                 .reportOrg2(markNews.getReportOrgR())
                 .copyOrg2(markNews.getCopyOrgR())
                 .publishCode2(markNews.getReleaseCode())
+                .sysCreated(markNews.getSysCreated())
+                .sysDept(markNews.getSysDept())
+                .sysLastUpd(markNews.getSysLastUpd())
+                .sysOrg(markNews.getSysOrg())
+                .sysCreatedby(userMap.get(markNews.getSysCreatedBy()) != null ? userMap.get(markNews.getSysCreatedBy()).getUserName() : markNews.getSysCreatedBy())
+                .sysLastUpdBy(userMap.get(markNews.getSysLastUpdBy()) != null ? userMap.get(markNews.getSysLastUpdBy()).getUserName() : markNews.getSysLastUpdBy())
                 // userid1,2,可以通过cbs的创建人获取
                 // username1,2 可通过导航处拟写的那个人(可能得通过cbs的流程系统来查询)
                 // 其他值暂不填充，还差两三个

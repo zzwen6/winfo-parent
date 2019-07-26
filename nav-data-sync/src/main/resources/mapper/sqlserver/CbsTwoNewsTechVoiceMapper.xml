@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.sqlserver.CbsTwoNewsTechVoiceMapper">
+
+
+    <select id="findByParentNewsId" resultType="top.hting.entity.sqlserver.tech.CbsTwoNewsTechVoice">
+        select * from Cbs_TwoNews_Tech_Voice
+        where CbsMarkNewsFID = #{parentId}
+
+
+    </select>
+</mapper>
