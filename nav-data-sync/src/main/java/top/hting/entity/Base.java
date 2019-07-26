@@ -1,4 +1,4 @@
-package top.hting.entity.sqlserver;
+package top.hting.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;

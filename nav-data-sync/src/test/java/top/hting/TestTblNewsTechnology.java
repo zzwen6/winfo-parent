@@ -1,16 +1,8 @@
 package top.hting;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
-import com.sun.org.apache.bcel.internal.generic.NEWARRAY;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,17 +30,22 @@ import top.hting.mapper.sqlserver.CbsTwoNewsTechMapper;
 import top.hting.mapper.sqlserver.CbsTwoNewsTechRadarMapper;
 import top.hting.mapper.sqlserver.CbsTwoNewsTechVoiceMapper;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Unit test for simple App.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AppTest {
+public class TestTblNewsTechnology {
 
 
     @Autowired
@@ -637,6 +634,10 @@ public class AppTest {
                 .sysOrg(markNews.getSysOrg())
                 .sysCreatedby(userMap.get(markNews.getSysCreatedBy()) != null ? userMap.get(markNews.getSysCreatedBy()).getUserName() : markNews.getSysCreatedBy())
                 .sysLastUpdBy(userMap.get(markNews.getSysLastUpdBy()) != null ? userMap.get(markNews.getSysLastUpdBy()).getUserName() : markNews.getSysLastUpdBy())
+                .nodeNumber("HBDT09") // 设定节点编号,不能为空
+                .isEnable(1) // 设置1 为可用
+                .userId(markNews.getSysCreatedBy())
+                .userName(userMap.get(markNews.getSysCreatedBy()) != null ? userMap.get(markNews.getSysCreatedBy()).getUserName() : markNews.getSysCreatedBy())
                 // userid1,2,可以通过cbs的创建人获取
                 // username1,2 可通过导航处拟写的那个人(可能得通过cbs的流程系统来查询)
                 // 其他值暂不填充，还差两三个
