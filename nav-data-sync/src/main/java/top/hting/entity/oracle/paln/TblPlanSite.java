@@ -1,5 +1,6 @@
 package top.hting.entity.oracle.paln;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -21,18 +22,25 @@ import java.util.Date;
 public class TblPlanSite extends Base {
     @TableId("planId")
     private String planId;
-
+    
+    @Excel(name = "planNumber")
     private String planNumber;
 
+    @Excel(name = "annual")
     private Short annual;
 
+    @Excel(name = "userId")
     private String userId;
 
+    @Excel(name = "userName")
     private String userName;
 
+    @Excel(name = "makeDate")
     private Date makeDate;
 
+    @Excel(name = "makeOrgCode")
     private String makeOrgCode;
 
+    @Excel(name = "nodeNumber")
     private String nodeNumber;
 }

@@ -1,5 +1,6 @@
 package top.hting.entity.sqlserver.plan;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -22,11 +23,19 @@ import java.util.Date;
 public class CbsSitePlan extends Base {
 
     @TableId(value = "pid")
+    @Excel(name = "pid")
     private String pid;
 
+    @Excel(name = "annual")
     private short annual;
+    
+    @Excel(name = "orgCode")
     private String orgCode;
+    
+    @Excel(name = "makeUserId")
     private String makeUserId;
+    
+    @Excel(name = "makeDate")
     private Date makeDate;
 
 }
