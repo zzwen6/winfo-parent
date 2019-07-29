@@ -79,6 +79,9 @@ public class TestTblPlanSiteAndList {
     }
 
 
+    /**
+     * 2019年7月29日 17:43:18 生成的excel中同样是测试处航标站长的数据，可认为不需要同步
+     */
     @Test
     public void synTblPlanSiteList() {
 
@@ -225,7 +228,7 @@ public class TestTblPlanSiteAndList {
             planSiteList.setSysDept(c.getSysDept());
             planSiteList.setSysLastUpd(c.getSysLastUpd());
             planSiteList.setSysLastUpdBy(getName(c.getSysLastUpdBy()));
-            planSiteList.setIsEnable(1);
+            planSiteList.setIsEnabled(1);
 
             result.add(planSiteList);
         }
@@ -252,7 +255,7 @@ public class TestTblPlanSiteAndList {
         site.setSysDept(plan.getSysDept());
         site.setSysLastUpd(plan.getSysLastUpd());
         site.setSysLastUpdBy(getName(plan.getSysLastUpdBy()));
-        site.setIsEnable(1);
+        site.setIsEnabled(1);
 
         return site;
     }

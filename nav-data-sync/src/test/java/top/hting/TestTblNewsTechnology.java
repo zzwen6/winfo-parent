@@ -75,8 +75,8 @@ public class TestTblNewsTechnology {
     final Map<String, TblUser> userMap = new HashMap<>();
 
 
-    String cbsMarkNewsSuccessFileName = "旧系统航标动态-成功.xlxs";
-    String cbsMarkNewsFailedFileName = "旧系统航标动态-失败.xlxs";
+    String cbsMarkNewsSuccessFileName = "旧系统航标动态-成功.xlsx";
+    String cbsMarkNewsFailedFileName = "旧系统航标动态-失败.xlsx";
     String tblNewsSuccessFileName = "新系统航标动态-成功.xlsx";
     String tblNewsFailedFileName = "新系统航标动态-失败.xlsx";
 
@@ -106,7 +106,9 @@ public class TestTblNewsTechnology {
     public void synMarkNewsAndTechnology() {
         String newsid = "cc9b093f-80f1-4136-8d3a-fba55b977fc4";
         // 旧数据库中所有的航标动态数据
-        List<CbsMarkNews> cbsMarkNews = cbsMarkNewsMapper.selectList(null);
+        Map<String, Object> params = new HashMap<>();
+        params.put("sysDeleted", 0);
+        List<CbsMarkNews> cbsMarkNews = cbsMarkNewsMapper.selectByMap(params);
 //        List<CbsMarkNews> cbsMarkNews = new ArrayList<>();
 
 //        CbsMarkNews news = cbsMarkNewsMapper.selectById(newsid);
@@ -132,7 +134,7 @@ public class TestTblNewsTechnology {
                 tblNews = convertCBS2TblNews(markNews);
 
                 try {
-                    tblNewsMapper.insert(tblNews);
+//                    tblNewsMapper.insert(tblNews);
 
                     tblNewsSuccessList.add(tblNews);
                     cbsMarkNewsSuccessList.add(markNews);
@@ -153,7 +155,7 @@ public class TestTblNewsTechnology {
                 for (TblNewsTechnology technology : allTblNewsTechnology) {
 
                     try {
-                        tblNewsTechnologyMapper.insert(technology);
+//                        tblNewsTechnologyMapper.insert(technology);
 
                         tblTechSuccessList.add(technology);
 
@@ -173,7 +175,7 @@ public class TestTblNewsTechnology {
                     // 更新或者新增
                     if (tblNewsTechnologyMapper.selectById(technology.getTechnologyId()) != null) {
                         try {
-                            tblNewsTechnologyMapper.updateById(technology);
+//                            tblNewsTechnologyMapper.updateById(technology);
 
                             tblTechUpdateSuccessList.add(technology);
 
@@ -184,7 +186,7 @@ public class TestTblNewsTechnology {
                     }else {
                         try {
 
-                            tblNewsTechnologyMapper.insert(technology);
+//                            tblNewsTechnologyMapper.insert(technology);
 
                             tblTechSuccessList.add(technology);
 
@@ -636,7 +638,7 @@ public class TestTblNewsTechnology {
                 .sysCreatedby(userMap.get(markNews.getSysCreatedBy()) != null ? userMap.get(markNews.getSysCreatedBy()).getUserName() : markNews.getSysCreatedBy())
                 .sysLastUpdBy(userMap.get(markNews.getSysLastUpdBy()) != null ? userMap.get(markNews.getSysLastUpdBy()).getUserName() : markNews.getSysLastUpdBy())
                 .nodeNumber("HBDT09") // 设定节点编号,不能为空
-                .isEnable(1) // 设置1 为可用
+                .isEnabled(1) // 设置1 为可用
                 .userId(markNews.getSysCreatedBy())
                 .userName(userMap.get(markNews.getSysCreatedBy()) != null ? userMap.get(markNews.getSysCreatedBy()).getUserName() : markNews.getSysCreatedBy())
                 // userid1,2,可以通过cbs的创建人获取

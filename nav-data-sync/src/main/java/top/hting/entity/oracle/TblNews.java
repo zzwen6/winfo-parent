@@ -125,8 +125,8 @@ public class TblNews implements Serializable {
     @Excel(name = "sysLastUpdBy")
     private String sysLastUpdBy;
 
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 
 
 }

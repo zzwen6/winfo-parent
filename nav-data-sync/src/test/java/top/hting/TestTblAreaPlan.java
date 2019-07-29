@@ -163,7 +163,7 @@ public class TestTblAreaPlan {
         area.setMakeDate(plan.getMakeDate());
         area.setMakeOrgCode(plan.getOrgCode());
         area.setNodeNumber("QWJH04");
-        area.setIsEnable(1);
+        area.setIsEnabled(1);
         area.setRemark("");
         area.setSysCreated(plan.getSysCreated());
         area.setSysCreatedBy(getName(plan.getSysCreatedBy()));
@@ -197,7 +197,7 @@ public class TestTblAreaPlan {
             tbl.setEndInspectDate(null); // TODO 需要在插件维护记录后拿到值
             tbl.setMaintainId(null);
 
-            tbl.setIsEnable(1);
+            tbl.setIsEnabled(1);
             tbl.setSysCreated(c.getSysCreated());
             tbl.setSysCreatedBy(getName(c.getSysCreatedBy()));
             tbl.setSysOrg(c.getSysOrg());

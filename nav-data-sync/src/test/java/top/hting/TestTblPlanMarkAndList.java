@@ -161,6 +161,7 @@ public class TestTblPlanMarkAndList {
         planMark.setSysDept(c.getSysDept());
         planMark.setSysLastUpd(c.getSysLastUpd());
         planMark.setSysLastUpdBy(getName(c.getSysLastUpdBy()));
+        planMark.setIsEnabled(1);
         return planMark;
     }
 
@@ -187,7 +188,7 @@ public class TestTblPlanMarkAndList {
             markList.setSysDept(m.getSysDept());
             markList.setSysLastUpd(m.getSysLastUpd());
             markList.setSysLastUpdBy(getName(m.getSysLastUpdBy()));
-            markList.setIsEnable(1);
+            markList.setIsEnabled(1);
 
             result.add(markList);
         }

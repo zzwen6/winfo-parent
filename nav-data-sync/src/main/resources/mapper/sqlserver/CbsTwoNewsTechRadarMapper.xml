@@ -5,7 +5,7 @@
 
     <select id="findByParentNewsId" resultType="top.hting.entity.sqlserver.tech.CbsTwoNewsTechRadar">
         select * from Cbs_TwoNews_Tech_Radar
-        where CbsMarkNewsFID = #{parentId}
+        where CbsMarkNewsFID = #{parentId}  and SysDeleted = 0
 
 
     </select>

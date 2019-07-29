@@ -159,7 +159,7 @@ public class TestTblPlanDivision {
         tblPlanDivision.setMakeDate(plan.getMakeDate());
         tblPlanDivision.setMakeOrgCode(plan.getOrgCode());
         tblPlanDivision.setNodeNumber("CWJH06");
-        tblPlanDivision.setIsEnable(1);
+        tblPlanDivision.setIsEnabled(1);
         tblPlanDivision.setSysCreated(plan.getSysCreated());
         tblPlanDivision.setSysCreatedBy(getName(plan.getSysCreatedBy()));
         tblPlanDivision.setSysOrg(plan.getSysOrg());
@@ -186,7 +186,7 @@ public class TestTblPlanDivision {
             divList.setMaintainCode(div.getMaintainCode());
             divList.setRequireShip(div.getRequireShip());
             divList.setRemark(div.getRemark());
-            divList.setIsEnable(1);
+            divList.setIsEnabled(1);
             divList.setSysCreated(div.getSysCreated());
             divList.setSysCreatedBy(getName(div.getSysCreatedBy()));
             divList.setSysOrg(div.getSysOrg());
