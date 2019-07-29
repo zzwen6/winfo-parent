@@ -44,6 +44,6 @@ public class TblPlanSite extends OBase {
     @Excel(name = "nodeNumber")
     private String nodeNumber;
 
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 }

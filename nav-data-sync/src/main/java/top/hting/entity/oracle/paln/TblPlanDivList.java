@@ -52,8 +52,8 @@ public class TblPlanDivList extends OBase implements Serializable {
     @Excel(name = "remark")
     private String remark;
     
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 
 
 

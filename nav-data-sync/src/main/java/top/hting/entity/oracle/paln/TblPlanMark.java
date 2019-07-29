@@ -49,5 +49,6 @@ public class TblPlanMark extends OBase implements Serializable {
     @Excel(name = "nodeNumber")
     private String nodeNumber;
 
-
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 }

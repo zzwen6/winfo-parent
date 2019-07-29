@@ -47,8 +47,8 @@ public class TblPlanArea extends OBase {
     private String nodeNumber;
 
 
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 
     @TableField(exist = false)
     @Excel(name = "isEnable")

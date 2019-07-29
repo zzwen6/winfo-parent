@@ -65,6 +65,6 @@ public class TblPlanAreaList extends OBase implements Serializable {
     private String maintainId;
 
 
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 }

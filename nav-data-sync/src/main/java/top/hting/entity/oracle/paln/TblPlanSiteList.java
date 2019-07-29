@@ -43,7 +43,7 @@ public class TblPlanSiteList extends OBase {
     @Excel(name = "remark")
     private String remark;
 
-    @Excel(name = "isEnable")
-    private Integer isEnable;
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 
 }
