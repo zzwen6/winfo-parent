@@ -206,15 +206,15 @@ public class TestTblPlanMarkAndList {
         Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标巡检计划失败航标列表失败", "tbl航标巡检计划失败航标列表失败", ExcelType.XSSF),
                 TblPlanMarkList.class, failedTblPlanMarkList);
 
-        Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标巡检计划失败航标列表成功", "tbl航标巡检计划失败航标列表成功", ExcelType.XSSF),
+        Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl航标巡检计划航标列表成功", "tbl航标巡检计划航标列表成功", ExcelType.XSSF),
                 TblPlanMarkList.class, successTblPlanMarkList);
 
 
         try {
             FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划-成功.xlsx");
             FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划-失败.xlsx");
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-成功.xlsx");
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-失败.xlsx");
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-失败.xlsx");
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-成功.xlsx");
 
 
             workbook.write(fos);

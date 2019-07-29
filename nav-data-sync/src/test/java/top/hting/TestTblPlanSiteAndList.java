@@ -162,17 +162,17 @@ public class TestTblPlanSiteAndList {
 
 
         Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl站点维护计划航标列表失败", "tbl站点维护计划航标列表失败", ExcelType.XSSF),
-                TblPlanSiteList.class, successTblPlanSiteList);
+                TblPlanSiteList.class, failedTblPlanSiteList);
 
         Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl站点维护计划航标列表成功", "tbl站点维护计划航标列表成功", ExcelType.XSSF),
-                TblPlanSiteList.class, failedTblPlanSiteList);
+                TblPlanSiteList.class, successTblPlanSiteList);
 
 
         try {
             FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划-成功.xlsx");
             FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划-失败.xlsx");
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-成功.xlsx");
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-失败.xlsx");
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-失败.xlsx");
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-成功.xlsx");
 
 
             workbook.write(fos);
