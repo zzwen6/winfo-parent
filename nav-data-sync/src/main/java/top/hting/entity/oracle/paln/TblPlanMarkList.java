@@ -49,4 +49,8 @@ public class TblPlanMarkList extends OBase implements Serializable {
 
     @Excel(name = "endInspectDate")
     private Date endInspectDate;
+
+    @Excel(name = "isEnable")
+    private Integer isEnable;
+
 }

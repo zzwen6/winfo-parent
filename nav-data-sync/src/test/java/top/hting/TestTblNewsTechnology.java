@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 航标动态，技术参数
  * Unit test for simple App.
  */
 @RunWith(SpringRunner.class)

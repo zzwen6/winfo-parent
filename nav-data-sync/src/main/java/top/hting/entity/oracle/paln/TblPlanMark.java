@@ -29,10 +29,10 @@ public class TblPlanMark extends OBase implements Serializable {
     private String planNumber;
 
     @Excel(name = "annual")
-    private Short annual;
+    private Integer annual;
 
     @Excel(name = "monthly")
-    private Short monthly;
+    private Integer monthly;
 
     @Excel(name = "userId")
     private String userId;
