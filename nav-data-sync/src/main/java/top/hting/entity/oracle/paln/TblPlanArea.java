@@ -22,20 +22,28 @@ import java.util.Date;
 @TableName("Tbl_PlanArea")
 public class TblPlanArea extends OBase {
     @TableId("planId")
+    @Excel(name = "planId")
     private String planId;
 
+    @Excel(name = "planNumber")
     private String planNumber;
 
+    @Excel(name = "annual")
     private Short annual;
 
+    @Excel(name = "userId")
     private String userId;
 
+    @Excel(name = "userName")
     private String userName;
 
+    @Excel(name = "makeDate")
     private Date makeDate;
 
+    @Excel(name = "makeOrgCode")
     private String makeOrgCode;
 
+    @Excel(name = "nodeNumber")
     private String nodeNumber;
 
 

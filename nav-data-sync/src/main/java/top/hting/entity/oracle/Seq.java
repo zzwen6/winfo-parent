@@ -1,5 +1,7 @@
 package top.hting.entity.oracle;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +19,13 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @ToString
+@TableName("TBL_SEQUENCE")
 public class Seq implements Serializable {
 
     /**
      * 序列主键
      */
+    @TableId("sequenceid")
     private String sequenceid;
 
     /**

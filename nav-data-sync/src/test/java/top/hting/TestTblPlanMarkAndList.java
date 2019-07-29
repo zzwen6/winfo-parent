@@ -15,8 +15,6 @@ import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.paln.TblPlanMark;
 import top.hting.entity.oracle.paln.TblPlanMarkList;
-import top.hting.entity.oracle.paln.TblPlanSite;
-import top.hting.entity.oracle.paln.TblPlanSiteList;
 import top.hting.entity.sqlserver.plan.CbsMonthlyList;
 import top.hting.entity.sqlserver.plan.CbsMonthlyPlan;
 import top.hting.mapper.oracle.SeqMapper;
@@ -85,6 +83,9 @@ public class TestTblPlanMarkAndList {
 
     /**
      * 同步航标巡检计划和需巡检的航标
+     *
+     * 2019年7月29日 17:21:25 测试结果生成excel显示，待插入的数据是用户【测试航标站站长】的测试数据，可认为不需要同步
+     *
      */
     @Test
     public void synTblPlanMarkAndList() {
