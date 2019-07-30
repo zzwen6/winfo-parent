@@ -1,5 +1,6 @@
 package top.hting.entity.sqlserver.inspect;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CbsInspectDGPS extends Base {
+    @TableId("pid")
     private String pid;
 
     private String cbsInspectListFID;

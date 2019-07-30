@@ -21,6 +21,7 @@ import java.util.Date;
 @TableName("Tbl_PlanSite")
 public class TblPlanSite extends OBase {
     @TableId("planId")
+    @Excel(name = "planId")
     private String planId;
     
     @Excel(name = "planNumber")

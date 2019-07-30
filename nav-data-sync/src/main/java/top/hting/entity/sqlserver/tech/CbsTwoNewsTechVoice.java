@@ -1,5 +1,6 @@
 package top.hting.entity.sqlserver.tech;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +17,7 @@ import java.util.Date;
 @Builder
 @TableName("Cbs_TwoNews_Tech_Voice")
 public class CbsTwoNewsTechVoice implements Serializable {
+    @TableId("pid")
     private String pid;
     private String CbsMarkNewsFID;
     private Integer SerialNumber;
