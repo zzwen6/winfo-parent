@@ -169,6 +169,8 @@ public class TestTblInspectFixed {
         fixed.setSysLastUpd(f.getSysLastUpd());
         fixed.setSysLastUpdBy(getName(f.getSysLastUpdBy()));
 
+        fixed.setIsEnabled(1);
+
         return fixed;
     }
 

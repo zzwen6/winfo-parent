@@ -196,6 +196,7 @@ public class TestTblInspectFloat {
         inspectFloat.setSysDept(f.getSysDept());
         inspectFloat.setSysLastUpd(f.getSysLastUpd());
         inspectFloat.setSysLastUpdBy(getName(f.getSysLastUpdBy()));
+        inspectFloat.setIsEnabled(1);
 
         return inspectFloat;
     }

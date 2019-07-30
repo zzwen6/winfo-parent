@@ -1,5 +1,6 @@
 package top.hting.entity.oracle.inspect;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -97,4 +98,6 @@ public class TblInspectFixed extends OBase implements Serializable {
 
     private String nodeNumber;
 
+    @Excel(name = "isEnabled")
+    private Integer isEnabled;
 }
