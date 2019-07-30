@@ -164,11 +164,11 @@ public class TestTblVisitFixed {
 
     private void saveFile() {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录成功", "tbl固定标志巡视记录成功", ExcelType.XSSF),
-                TblPlanArea.class, successTblVisitFixed);
+                TblVisitFixed.class, successTblVisitFixed);
 
 
         Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录失败", "tbl固定标志巡视记录失败", ExcelType.XSSF),
-                TblPlanArea.class, failedTblVisitFixed);
+                TblVisitFixed.class, failedTblVisitFixed);
 
 
 //        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录航标列表失败", "tbl固定标志巡视记录航标列表失败", ExcelType.XSSF),
@@ -179,8 +179,8 @@ public class TestTblVisitFixed {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录-失败.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblVisitFixed/" + "tbl固定标志巡视记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblVisitFixed/" + "tbl固定标志巡视记录-失败.xlsx");
 //            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录航标列表-失败.xlsx");
 //            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录航标列表-成功.xlsx");
 
