@@ -1,4 +1,4 @@
-package top.hting.mapper.oracle;
+package top.hting.mapper.oracle.tech;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

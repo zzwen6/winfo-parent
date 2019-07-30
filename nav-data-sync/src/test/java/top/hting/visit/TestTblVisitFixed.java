@@ -19,8 +19,8 @@ import top.hting.entity.oracle.visit.TblVisitFixed;
 import top.hting.entity.sqlserver.visit.CbsVisitFixed;
 import top.hting.mapper.oracle.SeqMapper;
 import top.hting.mapper.oracle.TblUserMapper;
-import top.hting.mapper.oracle.TblVisitFixedMapper;
-import top.hting.mapper.sqlserver.CbsVisitFixedMapper;
+import top.hting.mapper.oracle.visit.TblVisitFixedMapper;
+import top.hting.mapper.sqlserver.visit.CbsVisitFixedMapper;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

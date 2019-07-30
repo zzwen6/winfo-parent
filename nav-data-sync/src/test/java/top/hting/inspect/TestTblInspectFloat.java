@@ -19,9 +19,9 @@ import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInspectFloatingNew;
 import top.hting.mapper.oracle.SeqMapper;
-import top.hting.mapper.oracle.TblInspectFloatMapper;
+import top.hting.mapper.oracle.inspect.TblInspectFloatMapper;
 import top.hting.mapper.oracle.TblUserMapper;
-import top.hting.mapper.sqlserver.CbsInspectFloatingNewMapper;
+import top.hting.mapper.sqlserver.inspect.CbsInspectFloatingNewMapper;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

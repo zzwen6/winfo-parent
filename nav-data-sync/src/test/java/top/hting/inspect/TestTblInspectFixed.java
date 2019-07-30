@@ -18,9 +18,9 @@ import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInspectFixedNew;
 import top.hting.mapper.oracle.SeqMapper;
-import top.hting.mapper.oracle.TblInspectFixedMapper;
+import top.hting.mapper.oracle.inspect.TblInspectFixedMapper;
 import top.hting.mapper.oracle.TblUserMapper;
-import top.hting.mapper.sqlserver.CbsInspectFixedNewMapper;
+import top.hting.mapper.sqlserver.inspect.CbsInspectFixedNewMapper;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,7 +43,7 @@ public class TestTblInspectFixed {
     SeqMapper seqMapper;
 
 
-    // 新系统成功、失败的固定标志巡视记录
+    // 新系统成功、失败的固定标志巡检记录
     List<TblInspectFixed> successTblInspectFixed = new ArrayList<TblInspectFixed>();
     List<TblInspectFixed> failedTblInspectFixed = new ArrayList<TblInspectFixed>();
 
@@ -176,26 +176,26 @@ public class TestTblInspectFixed {
 
 
     private void saveFile() {
-        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录成功", "tbl固定标志巡视记录成功", ExcelType.XSSF),
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录成功", "tbl固定标志巡检记录成功", ExcelType.XSSF),
                 TblPlanArea.class, successTblInspectFixed);
 
 
-        Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录失败", "tbl固定标志巡视记录失败", ExcelType.XSSF),
+        Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录失败", "tbl固定标志巡检记录失败", ExcelType.XSSF),
                 TblPlanArea.class, failedTblInspectFixed);
 
 
-//        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录航标列表失败", "tbl固定标志巡视记录航标列表失败", ExcelType.XSSF),
+//        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录航标列表失败", "tbl固定标志巡检记录航标列表失败", ExcelType.XSSF),
 //                TblPlanAreaList.class, failedTblAreaList);
 //
-//        Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡视记录航标列表成功", "tbl固定标志巡视记录航标列表成功", ExcelType.XSSF),
+//        Workbook workbook3 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录航标列表成功", "tbl固定标志巡检记录航标列表成功", ExcelType.XSSF),
 //                TblPlanAreaList.class, successTblAreaList);
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录-失败.xlsx");
-//            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录航标列表-失败.xlsx");
-//            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡视记录航标列表-成功.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblInspectFixed/" + "tbl固定标志巡检记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblInspectFixed/" + "tbl固定标志巡检记录-失败.xlsx");
+//            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡检记录航标列表-失败.xlsx");
+//            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl固定标志巡检记录航标列表-成功.xlsx");
 
 
             workbook.write(fos);

@@ -13,14 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
-import top.hting.entity.oracle.paln.TblPlanArea;
-import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.oracle.visit.TblVisitFloat;
 import top.hting.entity.sqlserver.visit.CbsVisitFloating;
 import top.hting.mapper.oracle.SeqMapper;
 import top.hting.mapper.oracle.TblUserMapper;
-import top.hting.mapper.oracle.TblVisitFloatMapper;
-import top.hting.mapper.sqlserver.CbsVisitFloatingMapper;
+import top.hting.mapper.oracle.visit.TblVisitFloatMapper;
+import top.hting.mapper.sqlserver.visit.CbsVisitFloatingMapper;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

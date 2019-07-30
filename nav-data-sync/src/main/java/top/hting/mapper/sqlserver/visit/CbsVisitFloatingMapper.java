@@ -1,4 +1,4 @@
-package top.hting.mapper.sqlserver;
+package top.hting.mapper.sqlserver.visit;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.hting.entity.sqlserver.visit.CbsVisitFloating;

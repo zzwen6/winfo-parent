@@ -1,4 +1,4 @@
-package top.hting.mapper.sqlserver;
+package top.hting.mapper.sqlserver.inspect;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.hting.entity.sqlserver.inspect.CbsInspectFixedNew;
