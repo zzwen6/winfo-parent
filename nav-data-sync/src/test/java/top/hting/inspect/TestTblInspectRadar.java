@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.inspect.TblInspectRadar;
-import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInpsectRadarNew;
 import top.hting.mapper.oracle.SeqMapper;
@@ -169,11 +168,11 @@ public class TestTblInspectRadar {
 
     private void saveFile() {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl雷达应答器巡检记录成功", "tbl雷达应答器巡检记录成功", ExcelType.XSSF),
-                TblPlanArea.class, successTblInspectRadar);
+                TblInspectRadar.class, successTblInspectRadar);
 
 
         Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl雷达应答器巡检记录失败", "tbl雷达应答器巡检记录失败", ExcelType.XSSF),
-                TblPlanArea.class, failedTblInspectRadar);
+                TblInspectRadar.class, failedTblInspectRadar);
 
 
 //        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl雷达应答器巡检记录航标列表失败", "tbl雷达应答器巡检记录航标列表失败", ExcelType.XSSF),

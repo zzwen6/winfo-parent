@@ -14,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.inspect.TblInspectSound;
-import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInspectSound;
 import top.hting.mapper.oracle.SeqMapper;
@@ -35,7 +34,6 @@ import java.util.Map;
 
 /**
  * 音响航标巡检记录
- *
  */
 
 @RunWith(SpringRunner.class)
@@ -87,7 +85,7 @@ public class TestInspectSound {
     TblInspectSoundMapper tblInspectSoundMapper;
 
     @Test
-    public void synTblInspectSound(){
+    public void synTblInspectSound() {
 
         Map<String, Object> params = new HashMap<>();
         params.put("sysDeleted", 0);
@@ -156,11 +154,11 @@ public class TestInspectSound {
 
     private void saveFile() {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl音响航标巡检记录成功", "tbl音响航标巡检记录成功", ExcelType.XSSF),
-                TblPlanArea.class, successTblInspectSound);
+                TblInspectSound.class, successTblInspectSound);
 
 
         Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl音响航标巡检记录失败", "tbl音响航标巡检记录失败", ExcelType.XSSF),
-                TblPlanArea.class, failedTblInspectSound);
+                TblInspectSound.class, failedTblInspectSound);
 
 
 //        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl音响航标巡检记录航标列表失败", "tbl音响航标巡检记录航标列表失败", ExcelType.XSSF),
@@ -204,6 +202,7 @@ public class TestInspectSound {
 
 
     }
+
     private String getName(String userId) {
         return userMap.get(userId) != null ? userMap.get(userId).getUserName() : userId;
     }

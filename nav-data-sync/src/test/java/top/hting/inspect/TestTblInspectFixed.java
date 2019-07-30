@@ -14,12 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.inspect.TblInspectFixed;
-import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInspectFixedNew;
 import top.hting.mapper.oracle.SeqMapper;
-import top.hting.mapper.oracle.inspect.TblInspectFixedMapper;
 import top.hting.mapper.oracle.TblUserMapper;
+import top.hting.mapper.oracle.inspect.TblInspectFixedMapper;
 import top.hting.mapper.sqlserver.inspect.CbsInspectFixedNewMapper;
 
 import java.io.FileNotFoundException;
@@ -116,7 +115,6 @@ public class TestTblInspectFixed {
             }
 
 
-
         }
 
 
@@ -177,11 +175,11 @@ public class TestTblInspectFixed {
 
     private void saveFile() {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录成功", "tbl固定标志巡检记录成功", ExcelType.XSSF),
-                TblPlanArea.class, successTblInspectFixed);
+                TblInspectFixed.class, successTblInspectFixed);
 
 
         Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录失败", "tbl固定标志巡检记录失败", ExcelType.XSSF),
-                TblPlanArea.class, failedTblInspectFixed);
+                TblInspectFixed.class, failedTblInspectFixed);
 
 
 //        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl固定标志巡检记录航标列表失败", "tbl固定标志巡检记录航标列表失败", ExcelType.XSSF),
@@ -225,6 +223,7 @@ public class TestTblInspectFixed {
 
 
     }
+
     private String getName(String userId) {
         return userMap.get(userId) != null ? userMap.get(userId).getUserName() : userId;
     }

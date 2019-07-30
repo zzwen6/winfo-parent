@@ -15,12 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.inspect.TblInspectFloat;
-import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
 import top.hting.entity.sqlserver.inspect.CbsInspectFloatingNew;
 import top.hting.mapper.oracle.SeqMapper;
-import top.hting.mapper.oracle.inspect.TblInspectFloatMapper;
 import top.hting.mapper.oracle.TblUserMapper;
+import top.hting.mapper.oracle.inspect.TblInspectFloatMapper;
 import top.hting.mapper.sqlserver.inspect.CbsInspectFloatingNewMapper;
 
 import java.io.FileNotFoundException;
@@ -87,7 +86,6 @@ public class TestTblInspectFloat {
     TblInspectFloatMapper tblInspectFloatMapper;
 
 
-
     @Test
     public void synTblInspectFloat() {
 
@@ -120,9 +118,7 @@ public class TestTblInspectFloat {
             }
 
 
-
         }
-
 
 
     }
@@ -216,13 +212,14 @@ public class TestTblInspectFloat {
 
         return seq.getSequenceid() + format1 + format2.format(seq.getSequence());
     }
+
     private void saveFile() {
         Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("tbl浮动标志巡检记录成功", "tbl浮动标志巡检记录成功", ExcelType.XSSF),
-                TblPlanArea.class, successTblInspectFloat);
+                TblInspectFloat.class, successTblInspectFloat);
 
 
         Workbook workbook1 = ExcelExportUtil.exportExcel(new ExportParams("tbl浮动标志巡检记录失败", "tbl浮动标志巡检记录失败", ExcelType.XSSF),
-                TblPlanArea.class, failedTblInspectFloat);
+                TblInspectFloat.class, failedTblInspectFloat);
 
 
 //        Workbook workbook2 = ExcelExportUtil.exportExcel(new ExportParams("tbl浮动标志巡检记录航标列表失败", "tbl浮动标志巡检记录航标列表失败", ExcelType.XSSF),
