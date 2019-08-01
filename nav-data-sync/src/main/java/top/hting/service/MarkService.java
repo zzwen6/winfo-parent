@@ -31,7 +31,7 @@ public class MarkService {
             }
 
         }
-        return new TblMark();
+        return null;
     }
 
 
