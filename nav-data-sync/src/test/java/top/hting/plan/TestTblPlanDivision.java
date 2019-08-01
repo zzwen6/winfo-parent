@@ -218,10 +218,10 @@ public class TestTblPlanDivision {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + "tbl航标处维护计划-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + "tbl航标处维护计划-失败.xlsx");
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + "tbl航标处维护计划航标列表-失败.xlsx");
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + "tbl航标处维护计划航标列表-成功.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + System.currentTimeMillis()+ "tbl航标处维护计划-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + System.currentTimeMillis()+ "tbl航标处维护计划-失败.xlsx");
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + System.currentTimeMillis()+ "tbl航标处维护计划航标列表-失败.xlsx");
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanDivList/" + System.currentTimeMillis()+ "tbl航标处维护计划航标列表-成功.xlsx");
 
 
             workbook.write(fos);

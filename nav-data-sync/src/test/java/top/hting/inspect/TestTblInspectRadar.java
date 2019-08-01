@@ -24,6 +24,7 @@ import top.hting.mapper.sqlserver.inspect.CbsInpsectRadarNewMapper;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -129,22 +130,22 @@ public class TestTblInspectRadar {
         radar.setMarkId(r.getBasNavigationMarkFID());
         radar.setMarkTableCode(r.getMarkTable());
         radar.setMarkName(r.getMarkName());
-        radar.setSilentHour(r.getSilentHour());
-        radar.setSilentMinute(r.getSilentMinute());
-        radar.setSilentSecond(r.getSilentSecond());
-        radar.setSilentpPower(r.getSilentpPower());
-        radar.setSilentHourN(r.getSilentHourN());
-        radar.setSilentMinuteN(r.getSilentMinuteN());
-        radar.setSilentSecondN(r.getSilentSecondN());
-        radar.setSilentpPowerN(r.getSilentpPowerN());
-        radar.setAlertHour(r.getAlertHour());
-        radar.setAlertMinute(r.getAlertMinute());
-        radar.setAlertSecond(r.getAlertSecond());
-        radar.setAlertPower(r.getAlertPower());
-        radar.setLaunchHour(r.getLaunchHour());
-        radar.setLaunchMinute(r.getLaunchMinute());
-        radar.setLaunchSecond(r.getLaunchSecond());
-        radar.setLaunchPower(r.getLaunchPower());
+        radar.setSilentHour(r.getSilentHour() == null?0:r.getSilentHour());
+        radar.setSilentMinute(r.getSilentMinute() == null?0:r.getSilentMinute());
+        radar.setSilentSecond(r.getSilentSecond()==null?0:r.getSilentSecond());
+        radar.setSilentpPower(r.getSilentpPower()==null?BigDecimal.ZERO:r.getSilentpPower());
+        radar.setSilentHourN(r.getSilentHourN()==null?0:r.getSilentHourN());
+        radar.setSilentMinuteN(r.getSilentMinuteN()==null?0:r.getSilentMinuteN());
+        radar.setSilentSecondN(r.getSilentSecondN()==null?0:r.getSilentSecondN());
+        radar.setSilentpPowerN(r.getSilentpPowerN()==null?BigDecimal.ZERO:r.getSilentpPowerN());
+        radar.setAlertHour(r.getAlertHour()==null?0:r.getAlertHour());
+        radar.setAlertMinute(r.getAlertMinute()==null?0:r.getAlertMinute());
+        radar.setAlertSecond(r.getAlertSecond()==null?0:r.getAlertSecond());
+        radar.setAlertPower(r.getAlertPower()==null?BigDecimal.ZERO:r.getAlertPower());
+        radar.setLaunchHour(r.getLaunchHour()==null?0:r.getLaunchHour());
+        radar.setLaunchMinute(r.getLaunchMinute()==null?0:r.getLaunchMinute());
+        radar.setLaunchSecond(r.getLaunchSecond()==null?0:r.getLaunchSecond());
+        radar.setLaunchPower(r.getLaunchPower()==null? BigDecimal.ZERO:r.getLaunchPower());
         radar.setBatteryVoltage(r.getSupplyVoltage());
         radar.setBatteryCode(r.getLampVoltage());
         radar.setBatteryDeal(r.getLampVoltageDeal());
@@ -183,8 +184,8 @@ public class TestTblInspectRadar {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblInspectRadar/" + "tbl雷达应答器巡检记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblInspectRadar/" + "tbl雷达应答器巡检记录-失败.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblInspectRadar/" + System.currentTimeMillis() + "tbl雷达应答器巡检记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblInspectRadar/"+ System.currentTimeMillis()  + "tbl雷达应答器巡检记录-失败.xlsx");
 //            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl雷达应答器巡检记录航标列表-失败.xlsx");
 //            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl雷达应答器巡检记录航标列表-成功.xlsx");
 

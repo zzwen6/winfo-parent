@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
+import top.hting.entity.oracle.TblMark;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.paln.TblPlanArea;
 import top.hting.entity.oracle.paln.TblPlanAreaList;
@@ -21,6 +22,7 @@ import top.hting.mapper.oracle.SeqMapper;
 import top.hting.mapper.oracle.TblUserMapper;
 import top.hting.mapper.oracle.visit.TblVisitFixedMapper;
 import top.hting.mapper.sqlserver.visit.CbsVisitFixedMapper;
+import top.hting.service.MarkService;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -83,7 +85,8 @@ public class TestTblVisitFixed {
     TblVisitFixedMapper tblVisitFixedMapper;
     @Autowired
     CbsVisitFixedMapper cbsVisitFixedMapper;
-
+    @Autowired
+    MarkService markService;
 
     /**
      * 固定标志巡检记录同步
@@ -109,6 +112,36 @@ public class TestTblVisitFixed {
                     successTblVisitFixed.add(fix);
 
                 } catch (Exception e) {
+                    // 如果markId寻找不到，则进行重试
+                    if (e.getLocalizedMessage().contains("ORA-02291")) {
+                        TblMark mark = markService.getByMarkName(fix.getMarkName(), fix.getMarkTableCode());
+                        String tempMarkId = fix.getMarkId();
+
+                        if (mark != null) {
+                            fix.setMarkId(mark.getMarkId());
+                            // 重新尝试添加数据
+                            try {
+                                tblVisitFixedMapper.insert(fix);
+                                successTblVisitFixed.add(fix);
+                            } catch (Exception e1) {
+                                if (e1.getLocalizedMessage().contains("ORA-02291")) {
+                                    // 还原回原来的markId
+                                    fix.setMarkId(tempMarkId);
+                                    fix.setRemark("出错备注:" + e.getLocalizedMessage());
+
+                                    failedTblVisitFixed.add(fix);
+                                }
+
+                            }
+                        }else {
+                            fix.setRemark("出错备注:" + e.getLocalizedMessage());
+
+                            failedTblVisitFixed.add(fix);
+                        }
+                        continue;
+                    }
+
+
                     fix.setRemark("出错备注:" + e.getLocalizedMessage());
 
                     failedTblVisitFixed.add(fix);

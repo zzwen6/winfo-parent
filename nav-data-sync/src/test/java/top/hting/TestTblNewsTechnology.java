@@ -29,6 +29,7 @@ import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechDGPSMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechRadarMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechVoiceMapper;
+import top.hting.mapper.sqlserver.tech.VCbsTwoNewsTechMapper;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -70,7 +71,8 @@ public class TestTblNewsTechnology {
     CbsTwoNewsTechVoiceMapper cbsTwoNewsTechVoiceMapper;
     @Autowired
     TblUserMapper tblUserMapper;
-
+    @Autowired
+    VCbsTwoNewsTechMapper vCbsTwoNewsTechMapper;
 
     final Map<String, TblUser> userMap = new HashMap<>();
 
@@ -134,12 +136,13 @@ public class TestTblNewsTechnology {
                 tblNews = convertCBS2TblNews(markNews);
 
                 try {
-//                    tblNewsMapper.insert(tblNews);
+                    tblNewsMapper.insert(tblNews);
 
                     tblNewsSuccessList.add(tblNews);
                     cbsMarkNewsSuccessList.add(markNews);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    tblNews.setSysOrg("失败备注:" + e.getLocalizedMessage());
                     tblNewsFailedList.add(tblNews);
                     cbsMarkNewsFailedList.add(markNews);
 
@@ -155,11 +158,31 @@ public class TestTblNewsTechnology {
                 for (TblNewsTechnology technology : allTblNewsTechnology) {
 
                     try {
-//                        tblNewsTechnologyMapper.insert(technology);
+                        tblNewsTechnologyMapper.insert(technology);
 
                         tblTechSuccessList.add(technology);
 
                     } catch (Exception e) {
+                        // typeCode有可能空值，这里再取出视图的数据，然后再填充。非空约束
+                        if (e.getLocalizedMessage().contains("ORA-01400")) {
+                            VCbsTwoNewsTech vCbsTwoNewsTech = vCbsTwoNewsTechMapper.selectById(technology.getTechnologyId());
+                            technology.setTypeCode(vCbsTwoNewsTech.getTypeCode());
+                            // 重新尝试新增
+                            try {
+                                tblNewsTechnologyMapper.insert(technology);
+
+                                tblTechSuccessList.add(technology);
+                            }catch (Exception e1) {
+                                technology.setRemark(e.getLocalizedMessage());
+                                tblTechFailedList.add(technology);
+                                e.printStackTrace();
+
+
+                            }
+                            continue;
+                        }
+
+
                         e.printStackTrace();
                         technology.setRemark(e.getLocalizedMessage());
                         tblTechFailedList.add(technology);
@@ -173,9 +196,12 @@ public class TestTblNewsTechnology {
                 List<TblNewsTechnology> allTblNewsTechnology = getAllTblNewsTechnology(markNews);
                 for (TblNewsTechnology technology : allTblNewsTechnology) {
                     // 更新或者新增
-                    if (tblNewsTechnologyMapper.selectById(technology.getTechnologyId()) != null) {
+                    TblNewsTechnology temp = null;
+                    if ( (temp = tblNewsTechnologyMapper.selectById(technology.getTechnologyId()) ) != null) {
                         try {
-//                            tblNewsTechnologyMapper.updateById(technology);
+                            // 防止typecode空值
+                            technology.setTypeCode(temp.getTypeCode());
+                            tblNewsTechnologyMapper.updateById(technology);
 
                             tblTechUpdateSuccessList.add(technology);
 
@@ -186,11 +212,29 @@ public class TestTblNewsTechnology {
                     }else {
                         try {
 
-//                            tblNewsTechnologyMapper.insert(technology);
+                            tblNewsTechnologyMapper.insert(technology);
 
                             tblTechSuccessList.add(technology);
 
                         } catch (Exception e) {
+
+                            if (e.getLocalizedMessage().contains("ORA-01400")) {
+                                VCbsTwoNewsTech vCbsTwoNewsTech = vCbsTwoNewsTechMapper.selectById(technology.getTechnologyId());
+                                technology.setTypeCode(vCbsTwoNewsTech.getTypeCode());
+                                // 重新尝试新增
+                                try {
+                                    tblNewsTechnologyMapper.insert(technology);
+
+                                    tblTechSuccessList.add(technology);
+                                }catch (Exception e1) {
+                                    technology.setRemark(e.getLocalizedMessage());
+                                    tblTechFailedList.add(technology);
+
+
+                                }
+                                continue;
+                            }
+
                             technology.setRemark(e.getLocalizedMessage());
                             tblTechFailedList.add(technology);
                         }

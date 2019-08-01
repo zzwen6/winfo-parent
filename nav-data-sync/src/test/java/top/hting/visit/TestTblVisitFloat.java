@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.Seq;
+import top.hting.entity.oracle.TblMark;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.oracle.visit.TblVisitFloat;
 import top.hting.entity.sqlserver.visit.CbsVisitFloating;
@@ -19,6 +20,7 @@ import top.hting.mapper.oracle.SeqMapper;
 import top.hting.mapper.oracle.TblUserMapper;
 import top.hting.mapper.oracle.visit.TblVisitFloatMapper;
 import top.hting.mapper.sqlserver.visit.CbsVisitFloatingMapper;
+import top.hting.service.MarkService;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -82,7 +84,8 @@ public class TestTblVisitFloat {
 
     @Autowired
     CbsVisitFloatingMapper cbsVisitFloatingMapper;
-
+    @Autowired
+    MarkService markService;
     /**
      * 同步浮动巡视记录
      */
@@ -109,7 +112,41 @@ public class TestTblVisitFloat {
                     successTblVisitFloat.add(tbl);
 
                 } catch (Exception e) {
-                    tbl.setRemark("出错备注:" + e.getLocalizedMessage());
+                    if (e.getLocalizedMessage().contains("ORA-02291")) {
+                        TblMark mark = markService.getByMarkName(tbl.getMarkName(), tbl.getMarkTableCode());
+                        String tempMarkId = tbl.getMarkId();
+
+                        if (mark != null) {
+                            tbl.setMarkId(mark.getMarkId());
+                            // 重新尝试添加数据
+                            try {
+                                tblVisitFloatMapper.insert(tbl);
+                                successTblVisitFloat.add(tbl);
+                            } catch (Exception e1) {
+                                if (e1.getLocalizedMessage().contains("ORA-02291")) {
+                                    // 还原回原来的markId
+                                    tbl.setMarkId(tempMarkId);
+                                    tbl.setRemark("出错备注:" + e.getLocalizedMessage());
+
+                                    failedTblVisitFloat.add(tbl);
+                                }
+
+                            }
+                        }else {
+                            tbl.setRemark("出错备注:" + e.getLocalizedMessage());
+
+                            failedTblVisitFloat.add(tbl);
+                        }
+                        continue;
+
+
+
+
+                    }
+
+
+
+                        tbl.setRemark("出错备注:" + e.getLocalizedMessage());
                     failedTblVisitFloat.add(tbl);
                     e.printStackTrace();
                 }
@@ -192,8 +229,8 @@ public class TestTblVisitFloat {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblVisitFloat/" + "tbl浮动巡视记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblVisitFloat/" + "tbl浮动巡视记录-失败.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblVisitFloat/" +System.currentTimeMillis()+"tbl浮动巡视记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblVisitFloat/" + System.currentTimeMillis()+"tbl浮动巡视记录-失败.xlsx");
 //            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl浮动巡视记录航标列表-失败.xlsx");
 //            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl浮动巡视记录航标列表-成功.xlsx");
 

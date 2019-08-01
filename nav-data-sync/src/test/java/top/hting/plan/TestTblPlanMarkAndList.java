@@ -213,10 +213,10 @@ public class TestTblPlanMarkAndList {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划-失败.xlsx");
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-失败.xlsx");
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + "tbl航标巡检计划失败航标列表-成功.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + System.currentTimeMillis()+ "tbl航标巡检计划-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/"+ System.currentTimeMillis() + "tbl航标巡检计划-失败.xlsx");
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + System.currentTimeMillis()+ "tbl航标巡检计划失败航标列表-失败.xlsx");
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanMarkAndList/" + System.currentTimeMillis()+ "tbl航标巡检计划失败航标列表-成功.xlsx");
 
 
             workbook.write(fos);

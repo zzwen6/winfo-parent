@@ -172,10 +172,10 @@ public class TestTblPlanSiteAndList {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划-失败.xlsx");
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-失败.xlsx");
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + "tbl站点维护计划航标列表-成功.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + System.currentTimeMillis()+"tbl站点维护计划-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + System.currentTimeMillis()+"tbl站点维护计划-失败.xlsx");
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + System.currentTimeMillis()+"tbl站点维护计划航标列表-失败.xlsx");
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanSiteList/" + System.currentTimeMillis()+"tbl站点维护计划航标列表-成功.xlsx");
 
 
             workbook.write(fos);

@@ -169,8 +169,8 @@ public class TestInspectSound {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblInspectSound/" + "tbl音响航标巡检记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblInspectSound/" + "tbl音响航标巡检记录-失败.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblInspectSound/"+ System.currentTimeMillis() + "tbl音响航标巡检记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblInspectSound/" + System.currentTimeMillis()+ "tbl音响航标巡检记录-失败.xlsx");
 //            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl音响航标巡检记录航标列表-失败.xlsx");
 //            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblPlanArea/" + "tbl音响航标巡检记录航标列表-成功.xlsx");
 

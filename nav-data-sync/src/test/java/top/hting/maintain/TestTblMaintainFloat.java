@@ -176,8 +176,8 @@ public class TestTblMaintainFloat {
 
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/" + "tbl浮动标志维护记录-成功.xlsx");
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/" + "tbl浮动标志维护记录-失败.xlsx");
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/"  + System.currentTimeMillis()+ "tbl浮动标志维护记录-成功.xlsx");
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/" + System.currentTimeMillis() + "tbl浮动标志维护记录-失败.xlsx");
 //            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/" + "tbl浮动标志维护记录航标列表-失败.xlsx");
 //            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synTblMaintainFloat/" + "tbl浮动标志维护记录航标列表-成功.xlsx");
 
