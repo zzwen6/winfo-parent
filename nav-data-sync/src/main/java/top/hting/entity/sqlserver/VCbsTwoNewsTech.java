@@ -1,6 +1,11 @@
 package top.hting.entity.sqlserver;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -11,9 +16,13 @@ import java.util.Date;
  */
 @Data
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@TableName("V_Cbs_TwoNews_Tech")
 public class VCbsTwoNewsTech {
 
-
+    @TableId("pid")
     private String pid;
     // 航标动态主键
     private String cbsMarkNewsFID;
@@ -22,15 +31,15 @@ public class VCbsTwoNewsTech {
     private String orgCode;
     private Date sysLastUpd;
     private String setTypeCode;
-    private String serialNumber;
+    private Integer serialNumber;
     private String markno;
     private String MarkName;
     private String TypeCode;
-    private Integer LatitudeDegree;
-    private Integer LatitudeMinute;
-    private Integer LatitudeSecond;
-    private Integer LongitudeDegree;
-    private Integer LongitudeMinute;
+    private Short LatitudeDegree;
+    private Short LatitudeMinute;
+    private BigDecimal LatitudeSecond;
+    private Short LongitudeDegree;
+    private Short LongitudeMinute;
     private BigDecimal LongitudeSecond;
     private String Light;
     private String LightHeight;
@@ -38,7 +47,7 @@ public class VCbsTwoNewsTech {
     private String MarkHeight;
     private String Construct;
     private String Remark;
-    private int State;
+    private Integer State;
     private boolean SysDeleted;
 
 }
