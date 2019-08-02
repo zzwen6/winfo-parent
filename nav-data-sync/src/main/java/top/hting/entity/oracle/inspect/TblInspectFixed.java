@@ -136,6 +136,6 @@ public class TblInspectFixed extends OBase implements Serializable {
     @Excel(name = "nodeNumber")
     private String nodeNumber;
 
-    @Excel(name = "inspectId")
+    @Excel(name = "isEnabled")
     private Integer isEnabled;
 }
