@@ -3,6 +3,7 @@ package top.hting;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -134,7 +135,9 @@ public class TestTblNewsTechnology {
             // 不存在航标动态，进行插入
             if (tblNews == null) {
                 tblNews = convertCBS2TblNews(markNews);
-
+                if (StringUtils.contains(tblNews.getTitle(), "测试")){
+                    continue;
+                }
                 try {
                     tblNewsMapper.insert(tblNews);
 

@@ -145,11 +145,21 @@ public class TestTblInspectFloat {
         // cbs distance 进行拆分 272.53°13.35m
         if (StringUtils.isNotBlank(f.getDistance())) {
 
-            String[] split = f.getDistance().toLowerCase().split("°");
+            try {
+                String[] split = f.getDistance().toLowerCase().split("°");
+                // 这里生产库有问题 TODO
+                inspectFloat.setDistanceDegree(new BigDecimal(split[0]));
+                String meterStr = split[1].replace("m", "");
+                if (meterStr.contains("e")) { // 有指数形式
+                    String[] es = meterStr.split("e");
 
-            inspectFloat.setDistanceDegree(new BigDecimal(split[0]));
+                    meterStr =Double.valueOf(es[0]) *  Math.pow(10, Double.valueOf(es[1])) + "";
 
-            inspectFloat.setDistanceMeter(new BigDecimal(split[1].replace("m", "")));
+                }
+                inspectFloat.setDistanceMeter(new BigDecimal(meterStr));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
         }
 

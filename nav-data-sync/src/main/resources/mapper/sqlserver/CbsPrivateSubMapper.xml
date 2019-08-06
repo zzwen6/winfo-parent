@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.sqlserver.setup.CbsPrivateSubMapper">
+    <select id="findByParams" resultType="top.hting.entity.sqlserver.setup.CbsPrivateSub">
+
+        SELECT
+            s.SerialNumber
+           ,s.Pid
+           ,s.CbsPrivateMarkFID
+           ,s.CbsItemMaterialFID
+           ,s.TypeCode
+           ,s.Quantity
+           ,s.SysCreated
+           ,s.SysCreatedby
+           ,s.SysOrg
+           ,s.SysDept
+           ,s.SysLastUpd
+           ,s.SysLastUpdBy
+           ,s.SysDeleted
+           ,m.MaterialName as MaterialName
+        FROM Cbs_Private_Sub s
+        LEFT JOIN Cbs_Item_Material m
+        on  s.CbsItemMaterialFID = m.Pid
+        WHERE s.CbsPrivateMarkFID = #{parentId} and s.sysDeleted = 0 ORDER BY m.SerialNumber ASC
+
+    </select>
+
+</mapper>
