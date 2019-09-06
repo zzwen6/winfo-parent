@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,7 +16,13 @@ import top.hting.entity.oracle.TblNews;
 import top.hting.entity.oracle.TblNewsTechnology;
 import top.hting.entity.oracle.TblUser;
 import top.hting.entity.sqlserver.CbsMarkNews;
+import top.hting.entity.sqlserver.VCbsOneNewsTech;
 import top.hting.entity.sqlserver.VCbsTwoNewsTech;
+import top.hting.entity.sqlserver.tech.CbsOneNewsTech;
+import top.hting.entity.sqlserver.tech.CbsOneNewsTechAis;
+import top.hting.entity.sqlserver.tech.CbsOneNewsTechDGPS;
+import top.hting.entity.sqlserver.tech.CbsOneNewsTechRadar;
+import top.hting.entity.sqlserver.tech.CbsOneNewsTechVoice;
 import top.hting.entity.sqlserver.tech.CbsTwoNewsTech;
 import top.hting.entity.sqlserver.tech.CbsTwoNewsTechAis;
 import top.hting.entity.sqlserver.tech.CbsTwoNewsTechDGPS;
@@ -25,11 +32,17 @@ import top.hting.mapper.oracle.tech.TblNewsMapper;
 import top.hting.mapper.oracle.tech.TblNewsTechnologyMapper;
 import top.hting.mapper.oracle.TblUserMapper;
 import top.hting.mapper.sqlserver.tech.CbsMarkNewsMapper;
+import top.hting.mapper.sqlserver.tech.CbsOneNewsTechAisMapper;
+import top.hting.mapper.sqlserver.tech.CbsOneNewsTechDGPSMapper;
+import top.hting.mapper.sqlserver.tech.CbsOneNewsTechMapper;
+import top.hting.mapper.sqlserver.tech.CbsOneNewsTechRadarMapper;
+import top.hting.mapper.sqlserver.tech.CbsOneNewsTechVoiceMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechAisMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechDGPSMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechRadarMapper;
 import top.hting.mapper.sqlserver.tech.CbsTwoNewsTechVoiceMapper;
+import top.hting.mapper.sqlserver.tech.VCbsOneNewsTechMapper;
 import top.hting.mapper.sqlserver.tech.VCbsTwoNewsTechMapper;
 
 import java.io.FileNotFoundException;
@@ -70,10 +83,26 @@ public class TestTblNewsTechnology {
     CbsTwoNewsTechRadarMapper cbsTwoNewsTechRadarMapper;
     @Autowired
     CbsTwoNewsTechVoiceMapper cbsTwoNewsTechVoiceMapper;
+
+    // 一类动态技术数据
+    @Autowired
+    CbsOneNewsTechMapper cbsOneNewsTechMapper;
+    @Autowired
+    CbsOneNewsTechAisMapper cbsOneNewsTechAisMapper;
+    @Autowired
+    CbsOneNewsTechDGPSMapper cbsOneNewsTechDGPSMapper;
+    @Autowired
+    CbsOneNewsTechRadarMapper cbsOneNewsTechRadarMapper;
+    @Autowired
+    CbsOneNewsTechVoiceMapper cbsOneNewsTechVoiceMapper;
+
+
     @Autowired
     TblUserMapper tblUserMapper;
     @Autowired
     VCbsTwoNewsTechMapper vCbsTwoNewsTechMapper;
+    @Autowired
+    VCbsOneNewsTechMapper vCbsOneNewsTechMapper;
 
     final Map<String, TblUser> userMap = new HashMap<>();
 
@@ -107,15 +136,15 @@ public class TestTblNewsTechnology {
      */
     @Test
     public void synMarkNewsAndTechnology() {
-        String newsid = "cc9b093f-80f1-4136-8d3a-fba55b977fc4";
+        String newsid = "42b621de-6862-4ffd-abff-a1c589ff2a06";
         // 旧数据库中所有的航标动态数据
         Map<String, Object> params = new HashMap<>();
         params.put("sysDeleted", 0);
         List<CbsMarkNews> cbsMarkNews = cbsMarkNewsMapper.selectByMap(params);
-//        List<CbsMarkNews> cbsMarkNews = new ArrayList<>();
+       // List<CbsMarkNews> cbsMarkNews = new ArrayList<>();
 
-//        CbsMarkNews news = cbsMarkNewsMapper.selectById(newsid);
-//        cbsMarkNews.add(news);
+       // CbsMarkNews news = cbsMarkNewsMapper.selectById(newsid);
+       // cbsMarkNews.add(news);
 
         List<TblUser> tblUsers = tblUserMapper.selectList(null);
 
@@ -222,8 +251,17 @@ public class TestTblNewsTechnology {
                         } catch (Exception e) {
 
                             if (e.getLocalizedMessage().contains("ORA-01400")) {
-                                VCbsTwoNewsTech vCbsTwoNewsTech = vCbsTwoNewsTechMapper.selectById(technology.getTechnologyId());
-                                technology.setTypeCode(vCbsTwoNewsTech.getTypeCode());
+                                if (StringUtils.equals(markNews.getNewsCode(), "01")) {
+                                    VCbsOneNewsTech vCbsOneNewsTech = vCbsOneNewsTechMapper.selectById(technology.getTechnologyId());
+                                    technology.setTypeCode(vCbsOneNewsTech.getTypeCode());
+                                }else {
+
+                                    VCbsTwoNewsTech vCbsTwoNewsTech = vCbsTwoNewsTechMapper.selectById(technology.getTechnologyId());
+                                    technology.setTypeCode(vCbsTwoNewsTech.getTypeCode());
+                                }
+
+
+
                                 // 重新尝试新增
                                 try {
                                     tblNewsTechnologyMapper.insert(technology);
@@ -285,14 +323,14 @@ public class TestTblNewsTechnology {
                 TblNewsTechnology.class, tblTechUpdateFailedList);
 
         try {
-            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + cbsMarkNewsSuccessFileName);
-            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + cbsMarkNewsFailedFileName);
-            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblNewsFailedFileName);
-            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblNewsSuccessFileName);
-            FileOutputStream fos4 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechSuccessFileName);
-            FileOutputStream fos5 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechFailedFileName);
-            FileOutputStream fos6 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechUpdateSuccessFileName);
-            FileOutputStream fos7 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" + tblTechUpdateFailedFileName);
+            FileOutputStream fos = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ cbsMarkNewsSuccessFileName);
+            FileOutputStream fos1 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ cbsMarkNewsFailedFileName);
+            FileOutputStream fos2 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblNewsFailedFileName);
+            FileOutputStream fos3 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblNewsSuccessFileName);
+            FileOutputStream fos4 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblTechSuccessFileName);
+            FileOutputStream fos5 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblTechFailedFileName);
+            FileOutputStream fos6 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblTechUpdateSuccessFileName);
+            FileOutputStream fos7 = new FileOutputStream("D:/winfo/syn/synMarkNewsAndTechnology/" +System.currentTimeMillis()+ tblTechUpdateFailedFileName);
 
 
             workbook.write(fos);
@@ -332,29 +370,87 @@ public class TestTblNewsTechnology {
     private List<TblNewsTechnology> getAllTblNewsTechnology(CbsMarkNews markNews) {
         // List<VCbsTwoNewsTech> twoNewsTeches = cbsMarkNewsMapper.findByParams(QueryEntity.builder().parentId(markNews.getPid()).build());
         List<TblNewsTechnology> technologies = new ArrayList<>();
+        if (StringUtils.equals(markNews.getNewsCode(), "01")) {
+            List<CbsOneNewsTech> cbsOneNewsTeches = cbsOneNewsTechMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsOneNewsTechAis> cbsOneNewsTechAis = cbsOneNewsTechAisMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsOneNewsTechDGPS> cbsOneNewsTechDGPS = cbsOneNewsTechDGPSMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsOneNewsTechRadar> cbsOneNewsTechRadars = cbsOneNewsTechRadarMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsOneNewsTechVoice> cbsOneNewsTechVoices = cbsOneNewsTechVoiceMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
 
-        // 几张表，组合起来就是视图的数据
-        List<CbsTwoNewsTech> cbsTwoNewsTeches = cbsTwoNewsTechMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-        List<CbsTwoNewsTechAis> cbsTwoNewsTechAis = cbsTwoNewsTechAisMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-        List<CbsTwoNewsTechDGPS> cbsTwoNewsTechDGPS = cbsTwoNewsTechDGPSMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-        List<CbsTwoNewsTechRadar> cbsTwoNewsTechRadars = cbsTwoNewsTechRadarMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-        List<CbsTwoNewsTechVoice> cbsTwoNewsTechVoices = cbsTwoNewsTechVoiceMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
-        // 1.
-        List<TblNewsTechnology> t1 = cbsTwoNewsTeches2TblNewsTechnology(cbsTwoNewsTeches);
-        // 2.
-        List<TblNewsTechnology> t2 = cbsTwoNewsTechAis2TblNewsTechnology(cbsTwoNewsTechAis);
-        // 3.
-        List<TblNewsTechnology> t3 = cbsTwoNewsTechDGPS2TblNewsTechnology(cbsTwoNewsTechDGPS);
-        // 4.
-        List<TblNewsTechnology> t4 = cbsTwoNewsTechRadars2TblNewsTechnology(cbsTwoNewsTechRadars);
-        // 5.
-        List<TblNewsTechnology> t5 = cbsTwoNewsTechVoices2TblNewsTechnology(cbsTwoNewsTechVoices);
+            List<CbsTwoNewsTech> cbsTwoNewsTeches = new ArrayList<>();
+            List<CbsTwoNewsTechAis> cbsTwoNewsTechAis =  new ArrayList<>();
+            List<CbsTwoNewsTechDGPS> cbsTwoNewsTechDGPS =  new ArrayList<>();
+            List<CbsTwoNewsTechRadar> cbsTwoNewsTechRadars =  new ArrayList<>();
+            List<CbsTwoNewsTechVoice> cbsTwoNewsTechVoices =  new ArrayList<>();
 
-        technologies.addAll(t1);
-        technologies.addAll(t2);
-        technologies.addAll(t3);
-        technologies.addAll(t4);
-        technologies.addAll(t5);
+
+            cbsOneNewsTeches.forEach(p->{
+                CbsTwoNewsTech tmp = new CbsTwoNewsTech();
+                BeanUtils.copyProperties(p, tmp);
+                cbsTwoNewsTeches.add(tmp);
+            });
+            cbsOneNewsTechAis.forEach(p->{
+                CbsTwoNewsTechAis tmp = new CbsTwoNewsTechAis();
+                BeanUtils.copyProperties(p, tmp);
+                cbsTwoNewsTechAis.add(tmp);
+            });
+            cbsOneNewsTechDGPS.forEach(p->{
+                CbsTwoNewsTechDGPS tmp = new CbsTwoNewsTechDGPS();
+                BeanUtils.copyProperties(p, tmp);
+                cbsTwoNewsTechDGPS.add(tmp);
+            });
+            cbsOneNewsTechRadars.forEach(p->{
+                CbsTwoNewsTechRadar tmp = new CbsTwoNewsTechRadar();
+                BeanUtils.copyProperties(p, tmp);
+                cbsTwoNewsTechRadars.add(tmp);
+            });
+            cbsOneNewsTechVoices.forEach(p->{
+                CbsTwoNewsTechVoice tmp = new CbsTwoNewsTechVoice();
+                BeanUtils.copyProperties(p, tmp);
+                cbsTwoNewsTechVoices.add(tmp);
+            });
+            // 1.
+            List<TblNewsTechnology> t1 = cbsTwoNewsTeches2TblNewsTechnology(cbsTwoNewsTeches);
+            // 2.
+            List<TblNewsTechnology> t2 = cbsTwoNewsTechAis2TblNewsTechnology(cbsTwoNewsTechAis);
+            // 3.
+            List<TblNewsTechnology> t3 = cbsTwoNewsTechDGPS2TblNewsTechnology(cbsTwoNewsTechDGPS);
+            // 4.
+            List<TblNewsTechnology> t4 = cbsTwoNewsTechRadars2TblNewsTechnology(cbsTwoNewsTechRadars);
+            // 5.
+            List<TblNewsTechnology> t5 = cbsTwoNewsTechVoices2TblNewsTechnology(cbsTwoNewsTechVoices);
+
+            technologies.addAll(t1);
+            technologies.addAll(t2);
+            technologies.addAll(t3);
+            technologies.addAll(t4);
+            technologies.addAll(t5);
+
+        }else if (StringUtils.equals(markNews.getNewsCode(), "02")) {
+
+            // 几张表，组合起来就是视图的数据
+            List<CbsTwoNewsTech> cbsTwoNewsTeches = cbsTwoNewsTechMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsTwoNewsTechAis> cbsTwoNewsTechAis = cbsTwoNewsTechAisMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsTwoNewsTechDGPS> cbsTwoNewsTechDGPS = cbsTwoNewsTechDGPSMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsTwoNewsTechRadar> cbsTwoNewsTechRadars = cbsTwoNewsTechRadarMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            List<CbsTwoNewsTechVoice> cbsTwoNewsTechVoices = cbsTwoNewsTechVoiceMapper.findByParentNewsId(QueryEntity.builder().parentId(markNews.getPid()).build());
+            // 1.
+            List<TblNewsTechnology> t1 = cbsTwoNewsTeches2TblNewsTechnology(cbsTwoNewsTeches);
+            // 2.
+            List<TblNewsTechnology> t2 = cbsTwoNewsTechAis2TblNewsTechnology(cbsTwoNewsTechAis);
+            // 3.
+            List<TblNewsTechnology> t3 = cbsTwoNewsTechDGPS2TblNewsTechnology(cbsTwoNewsTechDGPS);
+            // 4.
+            List<TblNewsTechnology> t4 = cbsTwoNewsTechRadars2TblNewsTechnology(cbsTwoNewsTechRadars);
+            // 5.
+            List<TblNewsTechnology> t5 = cbsTwoNewsTechVoices2TblNewsTechnology(cbsTwoNewsTechVoices);
+
+            technologies.addAll(t1);
+            technologies.addAll(t2);
+            technologies.addAll(t3);
+            technologies.addAll(t4);
+            technologies.addAll(t5);
+        }
 
         return technologies;
     }
