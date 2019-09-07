@@ -45,7 +45,7 @@ public class DruidSqlServerConfig {
         config.setMapUnderscoreToCamelCase(false);
         config.setCacheEnabled(true);
 
-        config.setLogImpl(StdOutImpl.class);
+        // config.setLogImpl(StdOutImpl.class);
         factoryBean.setConfiguration(config);
 
 //        factoryBean.setTypeAliasesPackage("top.hting.mapper.sqlserver");

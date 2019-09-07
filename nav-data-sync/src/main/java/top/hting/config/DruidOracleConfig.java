@@ -43,7 +43,7 @@ public class DruidOracleConfig {
         config.setMapUnderscoreToCamelCase(false);
         config.setCacheEnabled(true);
 
-        config.setLogImpl(StdOutImpl.class);
+        // config.setLogImpl(StdOutImpl.class);
         factoryBean.setConfiguration(config);
 
 
