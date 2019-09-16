@@ -85,4 +85,12 @@ public class TblSetupPrivate extends OBase implements Serializable {
     @Excel(name = "remark")
     private String remark;
 
+    private String licenseNumber;
+
+    private Date acceptDate;
+
+    private Date approveDate;
+
+    private String copyOrg;
+
 }

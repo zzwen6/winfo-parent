@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.setup.TblSetupPrivateMapper">
+
+    <resultMap id="SetupPrivateInfoResultMap" type="top.hting.entity.oracle.setup.SetupPrivateInfoVO">
+        <result column="SetupId" jdbcType="VARCHAR" property="setupId"/>
+        <result column="ApplyNumber" jdbcType="VARCHAR" property="applyNumber"/>
+        <result column="ApplyOrgName" jdbcType="VARCHAR" property="applyOrgName"/>
+        <result column="ApplyTime" jdbcType="TIMESTAMP" property="applyTime"/>
+        <result column="ApplyUserName" jdbcType="VARCHAR" property="applyUserName"/>
+        <result column="AcceptOrgName" jdbcType="VARCHAR" property="acceptOrgName"/>
+        <result column="OrgCode" jdbcType="VARCHAR" property="orgCode"/>
+        <result column="OrgName" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ProjectName" jdbcType="VARCHAR" property="projectName"/>
+        <result column="Explain" jdbcType="VARCHAR" property="explain"/>
+        <result column="DesignOrgName" jdbcType="VARCHAR" property="designOrgName"/>
+        <result column="ConstructOrgName" jdbcType="VARCHAR" property="constructOrgName"/>
+        <result column="MaintainOrgCode" jdbcType="VARCHAR" property="maintainOrgCode"/>
+        <result column="MaintainOrgName" jdbcType="VARCHAR" property="maintainOrgName"/>
+        <result column="SetupTime" jdbcType="TIMESTAMP" property="setupTime"/>
+        <result column="BookingPeriod" jdbcType="VARCHAR" property="bookingPeriod"/>
+        <result column="SetupType" jdbcType="VARCHAR" property="setupType"/>
+        <result column="Lifetime" jdbcType="VARCHAR" property="lifetime"/>
+        <result column="NodeNumber" jdbcType="VARCHAR" property="nodeNumber"/>
+        <result column="NodeDisplayName" jdbcType="VARCHAR" property="nodeDisplayName"/>
+        <result column="INSTANCESID" jdbcType="VARCHAR" property="instanceId"/>
+
+        <result column="licenseNumber" jdbcType="VARCHAR" property="licenseNumber"/>
+        <result column="acceptDate" jdbcType="TIMESTAMP" property="acceptDate"/>
+        <result column="approveDate" jdbcType="TIMESTAMP" property="approveDate"/>
+        <result column="copyOrg" jdbcType="VARCHAR" property="copyOrg"/>
+
+         </resultMap>
+    <update id="updateTblSetupPrivateEnd">
+
+        update TBL_SETUPPRIVATE_END
+        set  LICENSENUMBER = #{licenseNumber,jdbcType=VARCHAR},
+           acceptDate = #{acceptDate,jdbcType=TIMESTAMP},
+           approveDate = #{approveDate,jdbcType=TIMESTAMP},
+           copyOrg = #{copyOrg,jdbcType=VARCHAR}
+        where setupid = #{setupid}
+
+    </update>
+
+    <select id="selectInfoById" resultMap="SetupPrivateInfoResultMap">
+      SELECT
+        t1.SetupId,
+        t1.ApplyNumber,
+        t1.ApplyOrgName,
+        t1.ApplyTime,
+        t1.ApplyUserName,
+        t1.AcceptOrgName,
+        t1.OrgCode,
+        t3.orgName,
+        t1.ProjectName,
+        t1.Explain,
+        t1.DesignOrgName,
+        t1.ConstructOrgName,
+        t1.MaintainOrgCode,
+        t1.MaintainOrgName,
+        t1.SetupTime,
+        t1.BookingPeriod,
+        t1.SetupType,
+        t1.Lifetime,
+        t1.NodeNumber,
+        t1.LICENSENUMBER,
+        t1.ACCEPTDATE,
+        t1.APPROVEDATE,
+        t1.COPYORG,
+        t2.NODENAME NodeDisplayName,
+        t2.INSTANCESID,
+        t1.fliePath
+        FROM tbl_setupprivate t1
+       LEFT JOIN VIW_FLOWSTATE t2
+          ON t2.BUSINESSID = t1.SETUPID
+       left join Tbl_Organization t3
+       on t1.OrgCode=t3.OrgCode
+        WHERE t1.SETUPID = #{setupId}
+
+    </select>
+    <select id="selectBySetupId" resultType="top.hting.entity.oracle.setup.SetupPriItem">
+
+
+        select * from TBL_SETPRIITEM where SETUPID = #{setupId}
+        order by SERIALNUMBER
+    </select>
+
+</mapper>
