@@ -18,6 +18,7 @@ import top.hting.mapper.oracle.pub.FlowTaskMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class SetupPubInstance {
     @Autowired
@@ -81,7 +82,31 @@ public class SetupPubInstance {
                 List<FlowTask> flowTasks = flowTaskMapper.selectByMap(map);
 
                 // 已有的流程，需要进行转换
+                String excludeId = UUID.randomUUID().toString();
                 for (FlowTask task : flowTasks) {
+                    ActHiActInst actHiActInst = new ActHiActInst();
+
+
+                    // 开始节点
+                    if ("SZGY01".equals(task.getNodeNumber())) {
+                        actHiActInst.setID_(UUID.randomUUID().toString());
+                        actHiActInst.setPROC_DEF_ID_(actEntity.getPROC_DEF_ID_());
+                        actHiActInst.setPROC_INST_ID_(actEntity.getPROC_INST_ID_());
+                        actHiActInst.setEXECUTION_ID_(excludeId);
+                        actHiActInst.setACT_ID_(task.getNodeNumber());
+                        actHiActInst.setTASK_ID_(task.getTaskId());
+                        actHiActInst.setCALL_PROC_INST_ID_(null);
+                        actHiActInst.setACT_NAME_(""); // 节点名称 导航处审批
+                        actHiActInst.setACT_TYPE_(""); // 类型 userTask
+                        actHiActInst.setASSIGNEE_(""); // 处理人ID
+                        actHiActInst.setSTART_TIME_(""); // 开始时间，
+                        actHiActInst.setEND_TIME_(""); // 结束时间
+                        actHiActInst.setDURATION_("");
+                        actHiActInst.setDELETE_REASON_(null);
+                        actHiActInst.setTENANT_ID_(null);
+
+                    }
+
 
 
 
