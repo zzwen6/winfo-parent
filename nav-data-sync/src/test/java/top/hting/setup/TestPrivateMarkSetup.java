@@ -128,83 +128,31 @@ public class TestPrivateMarkSetup {
 
         Map<String, Object> params = new HashMap<>();
         params.put("sysDeleted", 0);
-
+        params.put("Pid", "b8463b44-d398-4aef-8c2b-315f790670d7");
         // 所有专用航标有效数据
         List<CbsPrivateMark> cbsPrivateMarks = cbsPrivateMarkMapper.selectByMap(params);
 
         for (CbsPrivateMark privateMark : cbsPrivateMarks) {
 
             TblSetupPrivate tblSetupPrivate = tblSetupPrivateMapper.selectById(privateMark.getPid());
-
-            if (tblSetupPrivate == null) {
-
-                tblSetupPrivate = cbs2Tbl(privateMark);
-
-                try {
-
-                    // 主表插入成功
-                    tblSetupPrivateMapper.insert(tblSetupPrivate);
-                    successTblSetupPrivate.add(tblSetupPrivate);
-
-                } catch (Exception e) {
-                    tblSetupPrivate.setRemark("出错备注:" + e.getLocalizedMessage());
-                    failedTblSetupPrivat.add(tblSetupPrivate);
-                    e.printStackTrace();
-                    continue;
-                }
-
-
-                // 提交材料和材料附件(两表一对一，子表可无)
-                // 提交材料 TODO 要处理重复的数据  拿后面一半的数据
-                List<CbsPrivateSub> privateSubs = cbsPrivateSubMapper.findByParams(QueryEntity.builder().parentId(privateMark.getPid()).build());
-                if (privateSubs != null && privateSubs.size() > 0) {
-
-                    for (int i = privateSubs.size() / 2; i < privateSubs.size(); i++) {
-                        CbsPrivateSub privateSub = privateSubs.get(i);
-                        // 申请材料
-                        TblSetPriMaterial material = privateSubs2Tbl(privateSub);
-                        try {
-                            tblSetPriMaterialMapper.insert(material);
-                            successTblSetPriMaterial.add(material);
-                            // 材料附件
-                            List<CbsPrivateSubMaterial> subMaterials = cbsPrivateSubMaterialMapper.findByParentId(QueryEntity.builder().parentId(privateSub.getPid()).build());
-                            for (CbsPrivateSubMaterial subMaterial : subMaterials) {
-
-                                TblSetPriMatanNex matanNex = subMaterial2Tbl(subMaterial);
-
-                                // 报错就把content表给删除了
-                                try {
-                                    tblSetPriMatanNexMapper.insert(matanNex);
-                                    successTblSetPriMatanNex.add(matanNex);
-                                } catch (Exception ex) {
-                                    matanNex.setRemark(ex.getLocalizedMessage());
-                                    failedTblSetPriMatanNex.add(matanNex);
-                                    ex.printStackTrace();
-                                    try {
-                                        tblContentMapper.deleteById(matanNex.getContentid());
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-                            }
-
-                        } catch (Exception e) {
-                            material.setRemark(e.getLocalizedMessage());
-                            failedTblSetPriMaterial.add(material);
-
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }
-
-
+            if (tblSetupPrivate!=null) {
                 // 技术数据 拿后面一半的数据
                 List<CbsPrivateTech> techList = cbsPrivateTechMapper.findByParams(QueryEntity.builder().parentId(privateMark.getPid()).build());
+
+
                 if (techList != null && techList.size() > 0) {
-                    for (int i = techList.size() / 2; i < techList.size(); i++) {
+                    // 大小，和定长
+                    int listSize = techList.size();
+                    Integer maxSerialNumber = techList.get(techList.size() - 1).getSerialNumber();
+                    int step = listSize/maxSerialNumber;
+                    if (listSize %  maxSerialNumber!= 0) {
+
+                        continue;
+                    }
+
+
+                    // for (int i = techList.size() / 2; i < techList.size(); i++) {
+                    for (int i = step -1; i < techList.size(); i=i+step) {
                         CbsPrivateTech tech = techList.get(i);
                         TblSetPriTechnology technology = cbsTech2Tbl(tech);
 
@@ -222,9 +170,98 @@ public class TestPrivateMarkSetup {
                     }
 
                 }
-
-
             }
+            // if (tblSetupPrivate == null) {
+            //
+            //     tblSetupPrivate = cbs2Tbl(privateMark);
+            //
+            //     try {
+            //
+            //         // 主表插入成功
+            //         tblSetupPrivateMapper.insert(tblSetupPrivate);
+            //         successTblSetupPrivate.add(tblSetupPrivate);
+            //
+            //     } catch (Exception e) {
+            //         tblSetupPrivate.setRemark("出错备注:" + e.getLocalizedMessage());
+            //         failedTblSetupPrivat.add(tblSetupPrivate);
+            //         e.printStackTrace();
+            //         continue;
+            //     }
+            //
+            //
+            //     // 提交材料和材料附件(两表一对一，子表可无)
+            //     // 提交材料 TODO 要处理重复的数据  拿后面一半的数据
+            //     List<CbsPrivateSub> privateSubs = cbsPrivateSubMapper.findByParams(QueryEntity.builder().parentId(privateMark.getPid()).build());
+            //     if (privateSubs != null && privateSubs.size() > 0) {
+            //
+            //         for (int i = privateSubs.size() / 2; i < privateSubs.size(); i++) {
+            //             CbsPrivateSub privateSub = privateSubs.get(i);
+            //             // 申请材料
+            //             TblSetPriMaterial material = privateSubs2Tbl(privateSub);
+            //             try {
+            //                 tblSetPriMaterialMapper.insert(material);
+            //                 successTblSetPriMaterial.add(material);
+            //                 // 材料附件
+            //                 List<CbsPrivateSubMaterial> subMaterials = cbsPrivateSubMaterialMapper.findByParentId(QueryEntity.builder().parentId(privateSub.getPid()).build());
+            //                 for (CbsPrivateSubMaterial subMaterial : subMaterials) {
+            //
+            //                     TblSetPriMatanNex matanNex = subMaterial2Tbl(subMaterial);
+            //
+            //                     // 报错就把content表给删除了
+            //                     try {
+            //                         tblSetPriMatanNexMapper.insert(matanNex);
+            //                         successTblSetPriMatanNex.add(matanNex);
+            //                     } catch (Exception ex) {
+            //                         matanNex.setRemark(ex.getLocalizedMessage());
+            //                         failedTblSetPriMatanNex.add(matanNex);
+            //                         ex.printStackTrace();
+            //                         try {
+            //                             tblContentMapper.deleteById(matanNex.getContentid());
+            //                         } catch (Exception e) {
+            //                             e.printStackTrace();
+            //                         }
+            //
+            //                     }
+            //                 }
+            //
+            //             } catch (Exception e) {
+            //                 material.setRemark(e.getLocalizedMessage());
+            //                 failedTblSetPriMaterial.add(material);
+            //
+            //                 e.printStackTrace();
+            //             }
+            //
+            //
+            //         }
+            //     }
+            //
+            //
+            //     // 技术数据 拿后面一半的数据
+            //     List<CbsPrivateTech> techList = cbsPrivateTechMapper.findByParams(QueryEntity.builder().parentId(privateMark.getPid()).build());
+            //     if (techList != null && techList.size() > 0) {
+            //
+            //
+            //         for (int i = techList.size() / 2; i < techList.size(); i++) {
+            //             CbsPrivateTech tech = techList.get(i);
+            //             TblSetPriTechnology technology = cbsTech2Tbl(tech);
+            //
+            //
+            //             try {
+            //                 tblSetPriTechnologyMapper.insert(technology);
+            //                 successTblSetPriTechnology.add(technology);
+            //             } catch (Exception e) {
+            //                 technology.setRemark(e.getLocalizedMessage());
+            //                 failedTblSetPriTechnology.add(technology);
+            //                 e.printStackTrace();
+            //             }
+            //
+            //
+            //         }
+            //
+            //     }
+            //
+            //
+            // }
 
 
         }

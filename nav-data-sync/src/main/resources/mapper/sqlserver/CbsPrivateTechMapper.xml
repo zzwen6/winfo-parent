@@ -7,7 +7,7 @@
 
         select * from Cbs_Private_Tech
         WHERE CbsPrivateMarkFID = #{parentId} and sysDeleted = 0
-        ORDER BY SerialNumber ASC
+        ORDER BY SerialNumber,SysCreated ASC
 
     </select>
 </mapper>

@@ -6,6 +6,7 @@ spring:
       password: nav
       type: com.alibaba.druid.pool.DruidDataSource
       url: jdbc:oracle:thin:@127.0.0.1:49161/xe
+#      url: jdbc:oracle:thin:@127.0.0.1:49163/EE.oracle.docker
 
     sqlserver:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

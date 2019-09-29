@@ -16,7 +16,7 @@ import java.math.BigDecimal;
  * 专用航标技术参数
  */
 @Data
-@TableName("TBL_SETPRITECHNOLOGY")
+@TableName("TBL_SETPRITECHNOLOGY_end")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
