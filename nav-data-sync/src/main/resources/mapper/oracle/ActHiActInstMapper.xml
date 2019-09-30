@@ -4,7 +4,7 @@
 
 
     <select id="listSetupPubNoInstanceId" resultType="top.hting.entity.oracle.pub.PubInstance">
-        SELECT ts.setupid, ts.projectname,ts.applytime, ahp.PROC_INST_ID_ FROM TBL_SETUPPUBLIC ts
+        SELECT ts.setupid, ts.projectname,ts.applytime,ts.NODENUMBER, ahp.PROC_INST_ID_ FROM TBL_SETUPPUBLIC ts
           LEFT JOIN ACT_HI_PROCINST ahp
           ON ts.setupid = ahp.BUSINESS_KEY_
           WHERE ahp.proc_inst_id_ IS  NULL

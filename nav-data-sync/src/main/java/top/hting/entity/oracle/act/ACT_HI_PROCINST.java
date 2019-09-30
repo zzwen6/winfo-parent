@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -20,9 +21,9 @@ public class ACT_HI_PROCINST {
     @Excel(name = "PROC_DEF_ID_")
     private String PROC_DEF_ID_;
     @Excel(name = "START_TIME_")
-    private Date START_TIME_;
+    private Timestamp START_TIME_;
     @Excel(name = "END_TIME_")
-    private Date END_TIME_;
+    private Timestamp END_TIME_;
     @Excel(name = "DURATION_")
     private String DURATION_;
     @Excel(name = "START_USER_ID_")

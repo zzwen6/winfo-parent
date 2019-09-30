@@ -22,4 +22,8 @@ public class PubInstance {
     @Excel(name = "applyTime")
     private Date applyTime;
 
+    @Excel(name = "nodeNumber")
+    private String nodeNumber;
+
+
 }

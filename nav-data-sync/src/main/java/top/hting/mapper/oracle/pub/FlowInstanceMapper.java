@@ -4,5 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.hting.entity.oracle.act.FlowInstance;
 
 public interface FlowInstanceMapper extends BaseMapper<FlowInstance> {
-    
+
+    FlowInstance selectByBusinessId(String businessId);
+
 }

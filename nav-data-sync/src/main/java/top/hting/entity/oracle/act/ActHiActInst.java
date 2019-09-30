@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -33,9 +34,9 @@ public class ActHiActInst {
     @Excel(name = "ASSIGNEE_")
     private String ASSIGNEE_;
     @Excel(name = "START_TIME_")
-    private Date START_TIME_;
+    private Timestamp START_TIME_;
     @Excel(name = "END_TIME_")
-    private Date END_TIME_;
+    private Timestamp END_TIME_;
     @Excel(name = "DURATION_")
     private Long DURATION_;
     @Excel(name = "DELETE_REASON_")

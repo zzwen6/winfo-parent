@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.pub.FlowInstanceMapper">
+
+
+    <select id="selectByBusinessId" resultType="top.hting.entity.oracle.act.FlowInstance">
+        SELECT * FROM TBL_FLOWINSTANCE WHERE BUSINESSID = #{businessId}
+
+    </select>
+</mapper>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.pub.FlowTaskMapper">
+
+
+    <select id="selectByInstatncId" resultType="top.hting.entity.oracle.act.FlowTask">
+        select * from TBL_FLOWTASK where instanceId = #{instanceId}
+        order by serialNumber ASC
+
+    </select>
+</mapper>

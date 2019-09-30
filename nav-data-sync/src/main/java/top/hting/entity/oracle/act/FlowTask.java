@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import top.hting.entity.OBase;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -19,13 +20,13 @@ public class FlowTask extends OBase {
 
     private String taskName;
 
-    private Date sendTime;
+    private Timestamp sendTime;
 
     private String sendUserId;
 
     private String sendUserName;
 
-    private Date expireTime;
+    private Timestamp expireTime;
 
     private Short taskState;
 

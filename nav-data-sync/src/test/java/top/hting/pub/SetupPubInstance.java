@@ -7,7 +7,10 @@ import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import top.hting.entity.oracle.act.ACTHITASKINST;
 import top.hting.entity.oracle.act.ACTREPROCDEF;
 import top.hting.entity.oracle.act.ACT_HI_PROCINST;
@@ -29,12 +32,15 @@ import top.hting.mapper.oracle.pub.FlowTaskMapper;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SetupPubInstance {
     @Autowired
     ACT_HI_PROCINSTMapper act_hi_procinstMapper;
@@ -91,17 +97,17 @@ public class SetupPubInstance {
         nodeNameMap.put("SZGY07", "办结（同意）");
 
         //
-        List<PubInstance> pubInstancesTemp = new ArrayList<>();
-        pubInstancesTemp.add(pubInstances.get(0));
+        List<PubInstance> pubInstancesTemp = new ArrayList<>(pubInstances);
+        // pubInstancesTemp.add(pubInstances.get(0));
 
         for (PubInstance instance : pubInstancesTemp) {
 
             String setupId = instance.getSetupId();
 
-            FlowInstance flowInstance = flowInstanceMapper.selectById(setupId);
+            FlowInstance flowInstance = flowInstanceMapper.selectByBusinessId(setupId);
 
-            // 查询数据是否导入
-            if (flowInstance != null){
+            // 查询数据是否导入,并且只处理流程办理完成的
+            if (flowInstance != null && "SZGY07".equals(instance.getNodeNumber())){
 
                 // 创建ACT流程
                 ACT_HI_PROCINST actEntity = new ACT_HI_PROCINST();
@@ -109,12 +115,13 @@ public class SetupPubInstance {
                 actEntity.setPROC_INST_ID_(flowInstance.getInstanceid());
                 actEntity.setBUSINESS_KEY_(flowInstance.getBusinessid());
                 actEntity.setPROC_DEF_ID_(actreprocdef.getId_());
-                actEntity.setSTART_TIME_(flowInstance.getSysCreated());
-                actEntity.setEND_TIME_(flowInstance.getSysLastUpd());
+
+                actEntity.setSTART_TIME_(new Timestamp( flowInstance.getSysCreated().getTime()) );
+                actEntity.setEND_TIME_(new Timestamp(flowInstance.getSysLastUpd().getTime()));
                 actEntity.setDURATION_(null);
                 actEntity.setSTART_USER_ID_(flowInstance.getSysCreatedBy());
                 actEntity.setSTART_ACT_ID_(flowInstance.getFlownumber() + "01");
-                actEntity.setEND_ACT_ID_(flowInstance.getFlownumber() + "07"); // TODO
+                actEntity.setEND_ACT_ID_(flowInstance.getFlownumber() + "07"); //
                 actEntity.setSUPER_PROCESS_INSTANCE_ID_(null);
                 actEntity.setDELETE_REASON_(null);
                 actEntity.setTENANT_ID_(null);
@@ -135,15 +142,17 @@ public class SetupPubInstance {
                 // 创建流程历史
                 Map<String, Object> map = new HashMap<>();
                 map.put("instanceId", setupId);
-                List<FlowTask> flowTasks = flowTaskMapper.selectByMap(map);
+                // TODO 需要排序
+                List<FlowTask> flowTasks = flowTaskMapper.selectByInstatncId(setupId);
 
                 // 已有的流程，需要进行转换
                 String excludeId = UUID.randomUUID().toString();
                 for (FlowTask task : flowTasks) {
                     ActHiActInst actHiActInst = new ActHiActInst();
 
+                    // 这个ID需要自己自定义一个有序的出来
+                    actHiActInst.setID_(getSeq());
 
-                    actHiActInst.setID_(UUID.randomUUID().toString());
                     actHiActInst.setPROC_DEF_ID_(actEntity.getPROC_DEF_ID_());
                     actHiActInst.setPROC_INST_ID_(actEntity.getPROC_INST_ID_());
                     actHiActInst.setEXECUTION_ID_(excludeId);
@@ -159,8 +168,8 @@ public class SetupPubInstance {
                         actHiActInst.setACT_TYPE_("startEvent"); // 类型 userTask
                         actHiActInst.setASSIGNEE_(null); // 处理人ID
 
-                        actHiActInst.setSTART_TIME_(task.getSysCreated()); // 开始时间，
-                        actHiActInst.setEND_TIME_(task.getSysCreated()); // 结束时间
+                        actHiActInst.setSTART_TIME_(new Timestamp(task.getSysCreated().getTime())); // 开始时间，
+                        actHiActInst.setEND_TIME_(new Timestamp(task.getSysCreated().getTime())); // 结束时间
                         actHiActInst.setDURATION_(0L);
 
 
@@ -169,8 +178,8 @@ public class SetupPubInstance {
                         actHiActInst.setACT_TYPE_("endEvent"); // 类型 userTask
                         actHiActInst.setASSIGNEE_(null); // 处理人ID
 
-                        actHiActInst.setSTART_TIME_(task.getSysCreated()); // 开始时间，
-                        actHiActInst.setEND_TIME_(task.getSysCreated()); // 结束时间
+                        actHiActInst.setSTART_TIME_(new Timestamp(task.getSysCreated().getTime() )); // 开始时间，
+                        actHiActInst.setEND_TIME_(new Timestamp(task.getSysCreated().getTime())); // 结束时间
                         actHiActInst.setDURATION_(0L);
                         // isPass节点
                     } else {
@@ -178,8 +187,8 @@ public class SetupPubInstance {
                         actHiActInst.setACT_TYPE_("userTask"); // 类型 userTask
                         actHiActInst.setASSIGNEE_(task.getSendUserId()); // 处理人ID TODO
 
-                        actHiActInst.setSTART_TIME_(task.getSysCreated()); // 开始时间，
-                        actHiActInst.setEND_TIME_(task.getSysLastUpd()); // 结束时间
+                        actHiActInst.setSTART_TIME_(new Timestamp(task.getSysCreated().getTime())); // 开始时间，
+                        actHiActInst.setEND_TIME_(new Timestamp(task.getSysLastUpd().getTime())); // 结束时间
                         actHiActInst.setDURATION_(task.getSysLastUpd().getTime() - task.getSysCreated().getTime());
                     }
                     try {
@@ -202,7 +211,7 @@ public class SetupPubInstance {
                             "SZGY06".equals(task.getNodeNumber())) {
 
                         ACTHITASKINST acthitaskinst = new ACTHITASKINST();
-                        acthitaskinst.setID_(UUID.randomUUID().toString());
+                        acthitaskinst.setID_(task.getTaskId());
                         acthitaskinst.setPROC_DEF_ID_(actEntity.getPROC_DEF_ID_());
                         acthitaskinst.setTASK_DEF_KEY_(task.getNodeNumber());
                         acthitaskinst.setPROC_INST_ID_(actEntity.getPROC_INST_ID_());
@@ -212,9 +221,9 @@ public class SetupPubInstance {
                         acthitaskinst.setDESCRIPTION_(null);
                         acthitaskinst.setOWNER_(null);
                         acthitaskinst.setASSIGNEE_(task.getSendUserId()); // 处理人 TODO 发送人?接收人
-                        acthitaskinst.setSTART_TIME_(task.getSysCreated());
-                        acthitaskinst.setCLAIM_TIME_(task.getSysCreated());
-                        acthitaskinst.setEND_TIME_(task.getSysLastUpd());
+                        acthitaskinst.setSTART_TIME_(new Timestamp(task.getSysCreated().getTime()));
+                        acthitaskinst.setCLAIM_TIME_(new Timestamp(task.getSysCreated().getTime()));
+                        acthitaskinst.setEND_TIME_(new Timestamp(task.getSysLastUpd().getTime()));
                         acthitaskinst.setDURATION_(task.getSysLastUpd().getTime() - task.getSysCreated().getTime());
                         acthitaskinst.setDELETE_REASON_(null);
                         acthitaskinst.setPRIORITY_(null);
@@ -324,5 +333,18 @@ public class SetupPubInstance {
 
 
     }
+
+
+    static int seq = 1;
+    DecimalFormat format2 = new DecimalFormat("000000");
+
+    private String getSeq(){
+        String year = "2019";
+
+        return year + format2.format(seq++);
+
+
+    }
+
 
 }
