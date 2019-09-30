@@ -4,8 +4,8 @@
 
 
     <select id="selectByInstatncId" resultType="top.hting.entity.oracle.act.FlowTask">
-        select * from TBL_FLOWTASK where instanceId = #{instanceId}
-        order by serialNumber ASC
+        SELECT tf.*, ROW_NUMBER() OVER( PARTITION BY tf.NODENUMBER ORDER BY tf.SERIALNUMBER) row_num FROM TBL_FLOWTASK tf
+        WHERE tf.INSTANCEID = #{instanceId}
 
     </select>
 </mapper>
