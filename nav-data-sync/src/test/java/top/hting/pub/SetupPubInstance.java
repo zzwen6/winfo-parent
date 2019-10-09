@@ -76,6 +76,9 @@ public class SetupPubInstance {
     List<ACTHITASKINST> ACTHITASKINSTSuccess = new ArrayList<>();
     List<ACTHITASKINST> ACTHITASKINSTFailed = new ArrayList<>();
 
+    /**
+     *
+     */
     @Test
     public void synPubInstance() {
         // 所有的无流程id的公用航标数据
@@ -250,7 +253,6 @@ public class SetupPubInstance {
 
 
 
-
         }
 
 
@@ -339,7 +341,7 @@ public class SetupPubInstance {
     DecimalFormat format2 = new DecimalFormat("000000");
 
     private String getSeq(){
-        String year = "2019";
+        String year = "C2019";
 
         return year + format2.format(seq++);
 

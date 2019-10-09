@@ -128,7 +128,7 @@ public class TestPrivateMarkSetup {
 
         Map<String, Object> params = new HashMap<>();
         params.put("sysDeleted", 0);
-        params.put("Pid", "b8463b44-d398-4aef-8c2b-315f790670d7");
+        // params.put("Pid", "b8463b44-d398-4aef-8c2b-315f790670d7");
         // 所有专用航标有效数据
         List<CbsPrivateMark> cbsPrivateMarks = cbsPrivateMarkMapper.selectByMap(params);
 
@@ -136,26 +136,29 @@ public class TestPrivateMarkSetup {
 
             TblSetupPrivate tblSetupPrivate = tblSetupPrivateMapper.selectById(privateMark.getPid());
             if (tblSetupPrivate!=null) {
-                // 技术数据 拿后面一半的数据
+                // 技术数据 拿后面一半的数据,拿的是业务类型为 07 的数据
                 List<CbsPrivateTech> techList = cbsPrivateTechMapper.findByParams(QueryEntity.builder().parentId(privateMark.getPid()).build());
 
 
                 if (techList != null && techList.size() > 0) {
                     // 大小，和定长
-                    int listSize = techList.size();
-                    Integer maxSerialNumber = techList.get(techList.size() - 1).getSerialNumber();
-                    int step = listSize/maxSerialNumber;
-                    if (listSize %  maxSerialNumber!= 0) {
-
-                        continue;
-                    }
+                    // int listSize = techList.size();
+                    // Integer maxSerialNumber = techList.get(techList.size() - 1).getSerialNumber();
+                    // int step = listSize/maxSerialNumber;
+                    // if (listSize %  maxSerialNumber!= 0) {
+                    //
+                    //     continue;
+                    // }
 
 
                     // for (int i = techList.size() / 2; i < techList.size(); i++) {
-                    for (int i = step -1; i < techList.size(); i=i+step) {
+                    // for (int i = step -1; i < techList.size(); i=i+step) {
+                    for (int i = 0; i < techList.size(); i++) {
                         CbsPrivateTech tech = techList.get(i);
                         TblSetPriTechnology technology = cbsTech2Tbl(tech);
-
+                        if (tblSetPriTechnologyMapper.selectById(technology.getTechnologyid()) != null) {
+                            continue;
+                        }
 
                         try {
                             tblSetPriTechnologyMapper.insert(technology);

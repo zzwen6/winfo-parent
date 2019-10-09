@@ -6,7 +6,7 @@
     <select id="findByParams" resultType="top.hting.entity.sqlserver.setup.CbsPrivateTech">
 
         select * from Cbs_Private_Tech
-        WHERE CbsPrivateMarkFID = #{parentId} and sysDeleted = 0
+        WHERE CbsPrivateMarkFID = #{parentId} and sysDeleted = 0 AND BussinsseType = '07'
         ORDER BY SerialNumber,SysCreated ASC
 
     </select>
