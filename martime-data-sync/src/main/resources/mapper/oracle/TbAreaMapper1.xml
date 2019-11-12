@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.TbAreaMapper1">
+
+
+    <insert id="save">
+        insert into TB_AREA (id, display_name, organization_uuid, area_range)
+
+        values (#{id}, #{display_name}, #{organization_uuid,jdbcType=VARCHAR}, #{area_range, jdbcType=CLOB})
+        
+        
+    </insert>
+</mapper>

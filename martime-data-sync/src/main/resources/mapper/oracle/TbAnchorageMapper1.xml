@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.TbAnchorageMapper1">
+
+
+    <insert id="save" parameterType="top.hting.entity.oracle.TbAnchorage">
+        insert into TB_ANCHORAGE (ID, MTBH, MTMC, MTYWMC, MTWZ, MTZB, MTJZRQ, MTYZDW, MTDJ, MTBWSL, MTCD, MTJG, MTGN, QYSS, XGR, XGSJ, LXDH, JYR, GXHSC, SSGQ, MTXZ, SSLY, AISXH, VTSXH, MTSFKF, SFWXPMT, FWNLYS, HWLX, SSZYQ, XYJ, PVCWYL, XJXWYL, ZLSWYL, XFP, SM, BZ, QYSYKD, SFAZCCTV, CJR, CJSJ, YXZD, YSLXID, XSLX, SSHSJG, SYR, LXR, WYCGRL, WSZSCLNL, NSXXYJ, XSXXYJ, XYZ, KJSXCSZL, GKWXHWZYFZYXQ, ZYHZ, GHWYJCZFF, FDDBR, WXHCXHFG, HDWLANXHFG, ANCHORAGE_AREA, ORGANIZATION_UUID)
+
+
+
+        values (
+            #{ID},
+            #{MTBH},
+            #{MTMC},
+            #{MTYWMC},
+            #{MTWZ},
+            #{MTZB},
+            #{MTJZRQ},
+            #{MTYZDW},
+            #{MTDJ},
+            #{MTBWSL},
+            #{MTCD},
+            #{MTJG},
+            #{MTGN},
+            #{QYSS},
+            #{XGR},
+            #{XGSJ},
+            #{LXDH},
+            #{JYR},
+            #{GXHSC},
+            #{SSGQ},
+            #{MTXZ},
+            #{SSLY},
+            #{AISXH},
+            #{VTSXH},
+            #{MTSFKF},
+            #{SFWXPMT},
+            #{FWNLYS},
+            #{HWLX},
+            #{SSZYQ},
+            #{XYJ},
+            #{PVCWYL},
+            #{XJXWYL},
+            #{ZLSWYL},
+            #{XFP},
+            #{SM},
+            #{BZ},
+            #{QYSYKD},
+            #{SFAZCCTV},
+            #{CJR},
+            #{CJSJ},
+            #{YXZD},
+            #{YSLXID},
+            #{XSLX},
+            #{SSHSJG},
+            #{SYR},
+            #{LXR},
+            #{WYCGRL},
+            #{WSZSCLNL},
+            #{NSXXYJ},
+            #{XSXXYJ},
+            #{XYZ},
+            #{KJSXCSZL},
+            #{GKWXHWZYFZYXQ},
+            #{ZYHZ,jdbcType=CLOB},
+            #{GHWYJCZFF},
+            #{FDDBR},
+            #{WXHCXHFG},
+            #{HDWLANXHFG},
+            #{ANCHORAGE_AREA,jdbcType=CLOB},
+            #{ORGANIZATION_UUID}
+
+
+        )
+
+
+    </insert>
+</mapper>

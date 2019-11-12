@@ -2,18 +2,12 @@ package top.hting.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
-import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
-import org.apache.ibatis.logging.log4j2.Log4j2Impl;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -44,7 +38,8 @@ public class DruidOracleConfig {
         config.setMapUnderscoreToCamelCase(false);
         config.setCacheEnabled(true);
         config.setDefaultExecutorType(ExecutorType.BATCH);
-        config.setLogImpl(StdOutImpl.class);
+        // config.setLogImpl(StdOutImpl.class);
+
         factoryBean.setConfiguration(config);
 
 

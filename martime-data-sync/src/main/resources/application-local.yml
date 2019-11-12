@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    oracle:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      username: mts
+      password: mts
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:oracle:thin:@127.0.0.1:49163/EE.oracle.docker
+
+    sqlserver:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: DBQuery
+      password: DBQuery123
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=nav
+
+    mysql:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://198.18.11.176:7306/mts?useUnicode=true&amp&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=true
+      username: youzidata
+      password: huacloud
+      type: com.alibaba.druid.pool.DruidDataSource

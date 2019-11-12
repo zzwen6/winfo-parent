@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>nav-data-sync</module>
+        <module>martime-data-sync</module>
     </modules>
 
     <parent>

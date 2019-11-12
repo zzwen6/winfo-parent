@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.hting.mapper.oracle.TbPortMapper1">
+
+
+    <insert id="save" parameterType="top.hting.entity.oracle.TbPort">
+        insert into TB_PORT (ID, MTBH, MTMC, MTYWMC, MTWZ, MTZB, MTJZRQ, MTYZDW, MTDJ, MTBWSL, MTCD, MTJG, MTGN, QYSS, XGR, XGSJ, LXDH, JYR, GXHSC, SSGQ, MTXZ, SSLY, AISXH, VTSXH, MTSFKF, SFWXPMT, FWNLYS, HWLX, SSZYQ, XYJ, PVCWYL, XJXWYL, ZLSWYL, XFP, SM, BZ, QYSYKD, SFAZCCTV, CJR, CJSJ, YXZD, YSLXID, XSLX, SSHSJG, SYR, LXR, WYCGRL, WSZSCLNL, NSXXYJ, XSXXYJ, XYZ, KJSXCSZL, GKWXHWZYFZYXQ, ZYHZ, GHWYJCZFF, FDDBR, WXHCXHFG, HDWLANXHFG, PORT_AREA, ORGANIZATION_UUID) values (
+
+
+        #{ID},
+        #{MTBH,jdbcType=VARCHAR},
+        #{MTMC,jdbcType=VARCHAR},
+        #{MTYWMC,jdbcType=VARCHAR},
+        #{MTWZ,jdbcType=VARCHAR},
+        #{MTZB,jdbcType=VARCHAR},
+        #{MTJZRQ,jdbcType=VARCHAR},
+        #{MTYZDW,jdbcType=VARCHAR},
+        #{MTDJ,jdbcType=VARCHAR},
+        #{MTBWSL,jdbcType=VARCHAR},
+        #{MTCD,jdbcType=VARCHAR},
+        #{MTJG,jdbcType=VARCHAR},
+        #{MTGN,jdbcType=VARCHAR},
+        #{QYSS,jdbcType=VARCHAR},
+        #{XGR,jdbcType=VARCHAR},
+        #{XGSJ,jdbcType=VARCHAR},
+        #{LXDH,jdbcType=VARCHAR},
+        #{JYR,jdbcType=VARCHAR},
+        #{GXHSC,jdbcType=VARCHAR},
+        #{SSGQ,jdbcType=VARCHAR},
+        #{MTXZ,jdbcType=VARCHAR},
+        #{SSLY,jdbcType=VARCHAR},
+        #{AISXH,jdbcType=VARCHAR},
+        #{VTSXH,jdbcType=VARCHAR},
+        #{MTSFKF,jdbcType=VARCHAR},
+        #{SFWXPMT,jdbcType=VARCHAR},
+        #{FWNLYS,jdbcType=VARCHAR},
+        #{HWLX,jdbcType=VARCHAR},
+        #{SSZYQ,jdbcType=VARCHAR},
+        #{XYJ,jdbcType=VARCHAR},
+        #{PVCWYL,jdbcType=VARCHAR},
+        #{XJXWYL,jdbcType=VARCHAR},
+        #{ZLSWYL,jdbcType=VARCHAR},
+        #{XFP,jdbcType=VARCHAR},
+        #{SM,jdbcType=VARCHAR},
+        #{BZ,jdbcType=VARCHAR},
+        #{QYSYKD,jdbcType=VARCHAR},
+        #{SFAZCCTV,jdbcType=VARCHAR},
+        #{CJR,jdbcType=VARCHAR},
+        #{CJSJ,jdbcType=VARCHAR},
+        #{YXZD,jdbcType=VARCHAR},
+        #{YSLXID,jdbcType=VARCHAR},
+        #{XSLX,jdbcType=VARCHAR},
+        #{SSHSJG,jdbcType=VARCHAR},
+        #{SYR,jdbcType=VARCHAR},
+        #{LXR,jdbcType=VARCHAR},
+        #{WYCGRL,jdbcType=VARCHAR},
+        #{WSZSCLNL,jdbcType=VARCHAR},
+        #{NSXXYJ,jdbcType=VARCHAR},
+        #{XSXXYJ,jdbcType=VARCHAR},
+        #{XYZ,jdbcType=VARCHAR},
+        #{KJSXCSZL,jdbcType=VARCHAR},
+        #{GKWXHWZYFZYXQ,jdbcType=VARCHAR},
+        #{ZYHZ,jdbcType=CLOB},
+        #{GHWYJCZFF,jdbcType=VARCHAR},
+        #{FDDBR,jdbcType=VARCHAR},
+        #{WXHCXHFG,jdbcType=VARCHAR},
+        #{HDWLANXHFG,jdbcType=VARCHAR},
+        #{port_area,jdbcType=CLOB},
+        #{organization_uuid,jdbcType=VARCHAR}
+        )
+
+    </insert>
+</mapper>
