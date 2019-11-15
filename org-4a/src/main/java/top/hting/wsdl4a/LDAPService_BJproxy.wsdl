@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="LDAPDataService" targetNamespace="http://service.ldap.mgear.com/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://service.ldap.mgear.com/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service.ldap.mgear.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://service.ldap.mgear.com/" schemaLocation="http://msa-xtgl-soa1:8011/CommissionInvoke/proxy/LDAPService_BJproxy?SCHEMA%2FCommissionInvoke%2Fwsdl%2FXMLSchema_-1044005115"/>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="UserQueryServices_userQuery4Detail">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQuery4Detail" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="UserQueryServices_userQuery4DetailResponse">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQuery4DetailResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="UserQueryServices_userQueryByCondition">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQueryByCondition" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="UserQueryServices_userQueryByConditionResponse">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQueryByConditionResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="UserQueryServices_userQueryRoles">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQueryRoles" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="UserQueryServices_userQueryRolesResponse">
+    <WL5G3N0:part element="WL5G3N1:UserQueryServices_userQueryRolesResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="OrgQueryServices_queryOrg4Detail">
+    <WL5G3N0:part element="WL5G3N1:OrgQueryServices_queryOrg4Detail" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="OrgQueryServices_queryOrg4DetailResponse">
+    <WL5G3N0:part element="WL5G3N1:OrgQueryServices_queryOrg4DetailResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="OrgQueryServices_queryOrgByCondition">
+    <WL5G3N0:part element="WL5G3N1:OrgQueryServices_queryOrgByCondition" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="OrgQueryServices_queryOrgByConditionResponse">
+    <WL5G3N0:part element="WL5G3N1:OrgQueryServices_queryOrgByConditionResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="DeptQueryServices_queryDeptByCondition">
+    <WL5G3N0:part element="WL5G3N1:DeptQueryServices_queryDeptByCondition" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="DeptQueryServices_queryDeptByConditionResponse">
+    <WL5G3N0:part element="WL5G3N1:DeptQueryServices_queryDeptByConditionResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="DeptQueryServices_queryDept4Detail">
+    <WL5G3N0:part element="WL5G3N1:DeptQueryServices_queryDept4Detail" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="DeptQueryServices_queryDept4DetailResponse">
+    <WL5G3N0:part element="WL5G3N1:DeptQueryServices_queryDept4DetailResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQuery4Detail">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQuery4Detail" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQuery4DetailResponse">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQuery4DetailResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQueryByCondition">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQueryByCondition" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQueryByConditionResponse">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQueryByConditionResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQueryUsersList">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQueryUsersList" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="RoleQueryServices_roleQueryUsersListResponse">
+    <WL5G3N0:part element="WL5G3N1:RoleQueryServices_roleQueryUsersListResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="LDAPDataService">
+    <WL5G3N0:operation name="UserQueryServices_userQuery4Detail">
+      <WL5G3N0:input message="WL5G3N1:UserQueryServices_userQuery4Detail"/>
+      <WL5G3N0:output message="WL5G3N1:UserQueryServices_userQuery4DetailResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="UserQueryServices_userQueryByCondition">
+      <WL5G3N0:input message="WL5G3N1:UserQueryServices_userQueryByCondition"/>
+      <WL5G3N0:output message="WL5G3N1:UserQueryServices_userQueryByConditionResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="UserQueryServices_userQueryRoles">
+      <WL5G3N0:input message="WL5G3N1:UserQueryServices_userQueryRoles"/>
+      <WL5G3N0:output message="WL5G3N1:UserQueryServices_userQueryRolesResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="OrgQueryServices_queryOrg4Detail">
+      <WL5G3N0:input message="WL5G3N1:OrgQueryServices_queryOrg4Detail"/>
+      <WL5G3N0:output message="WL5G3N1:OrgQueryServices_queryOrg4DetailResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="OrgQueryServices_queryOrgByCondition">
+      <WL5G3N0:input message="WL5G3N1:OrgQueryServices_queryOrgByCondition"/>
+      <WL5G3N0:output message="WL5G3N1:OrgQueryServices_queryOrgByConditionResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="DeptQueryServices_queryDeptByCondition">
+      <WL5G3N0:input message="WL5G3N1:DeptQueryServices_queryDeptByCondition"/>
+      <WL5G3N0:output message="WL5G3N1:DeptQueryServices_queryDeptByConditionResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="DeptQueryServices_queryDept4Detail">
+      <WL5G3N0:input message="WL5G3N1:DeptQueryServices_queryDept4Detail"/>
+      <WL5G3N0:output message="WL5G3N1:DeptQueryServices_queryDept4DetailResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQuery4Detail">
+      <WL5G3N0:input message="WL5G3N1:RoleQueryServices_roleQuery4Detail"/>
+      <WL5G3N0:output message="WL5G3N1:RoleQueryServices_roleQuery4DetailResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQueryByCondition">
+      <WL5G3N0:input message="WL5G3N1:RoleQueryServices_roleQueryByCondition"/>
+      <WL5G3N0:output message="WL5G3N1:RoleQueryServices_roleQueryByConditionResponse"/>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQueryUsersList">
+      <WL5G3N0:input message="WL5G3N1:RoleQueryServices_roleQueryUsersList"/>
+      <WL5G3N0:output message="WL5G3N1:RoleQueryServices_roleQueryUsersListResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="LDAPDataServicePortBinding" type="WL5G3N1:LDAPDataService">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="UserQueryServices_userQuery4Detail">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="UserQueryServices_userQueryByCondition">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="UserQueryServices_userQueryRoles">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="OrgQueryServices_queryOrg4Detail">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="OrgQueryServices_queryOrgByCondition">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="DeptQueryServices_queryDeptByCondition">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="DeptQueryServices_queryDept4Detail">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQuery4Detail">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQueryByCondition">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+    <WL5G3N0:operation name="RoleQueryServices_roleQueryUsersList">
+      <WL5G3N2:operation/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="LDAPDataService">
+    <WL5G3N0:port binding="WL5G3N1:LDAPDataServicePortBinding" name="LDAPDataServicePort">
+      <WL5G3N2:address location="http://msa-xtgl-soa1:8011/CommissionInvoke/proxy/LDAPService_BJproxy"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>
