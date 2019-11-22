@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.hting.mapper.oracle.markrelation.MarkRelationMapper">
-    <insert id="insert">
+    <insert id="insert" parameterType="top.hting.entity.oracle.markrelation.MarkRelation">
         INSERT INTO TBL_MARKRELATION
         (
           RELATIONID
@@ -18,9 +18,9 @@
         VALUES
         (
             SYS_GUID(),
-            #{markId},
+            #{markId,jdbcType=VARCHAR},
             1,
-            #{markId2},
+            #{markId2,jdbcType=VARCHAR},
             SYSDATE,
             'admin',
             '092000',
@@ -36,7 +36,8 @@
     <select id="get" resultType="top.hting.entity.oracle.markrelation.MarkRelation">
 
              SELECT m.MARKNAME AS markName,
-      m.MARKID
+      m.MARKID,
+      m.marktablecode
     FROM TBL_MARK m
     LEFT JOIN TBL_MARKRELATION tm ON tm.MARKID2=m.MARKID
     WHERE

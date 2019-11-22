@@ -3,6 +3,7 @@ package top.hting.entity.oracle.markrelation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * 航标关联关系
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class MarkRelation {
 
     private String markId;
@@ -21,8 +23,10 @@ public class MarkRelation {
 
     private String markId2;
 
-    
+    private String markTableCode;
+    private String markTableCode2;
 
+    private String markName2;
 
 
 }

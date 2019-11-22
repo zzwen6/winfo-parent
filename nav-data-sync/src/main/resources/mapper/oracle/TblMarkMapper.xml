@@ -6,7 +6,14 @@
     <select id="findByMarkName" resultType="top.hting.entity.oracle.TblMark">
         select * from  tbl_mark
         where MARKNAME like '%'||#{markName}||'%'
+        and IsDismantle = 0
 
+
+    </select>
+    <select id="findByMarkTableCode" resultType="top.hting.entity.oracle.TblMark">
+
+        select * from  tbl_mark where marktablecode like #{markTableCode}||'%'
+        and IsDismantle = 0
 
     </select>
 </mapper>

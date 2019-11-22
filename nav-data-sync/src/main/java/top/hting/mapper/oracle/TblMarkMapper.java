@@ -9,4 +9,5 @@ public interface TblMarkMapper extends BaseMapper<TblMark> {
 
     List<TblMark> findByMarkName(String markName);
 
+    List<TblMark> findByMarkTableCode(String markTableCode);
 }
